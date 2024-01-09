@@ -1,0 +1,159 @@
+body {
+    margin: 0;
+    font-family: sans-serif;
+}
+
+/*
+ * Header
+ */
+
+header {
+    background-color: #333;
+    color: #fff;
+}
+
+.header-wrapper {
+    margin: auto;
+    max-width: 1200px;
+    min-height: 50px;
+
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header a {
+    color: #fff;
+    margin: 0 10px;
+    text-decoration: none;
+    padding-bottom: 8px;
+}
+
+.navlink-selected {
+    border-bottom: #ddd 1px solid;
+}
+
+/*
+ * General
+ */
+
+.wrapper {
+    margin: auto;
+    max-width: 1000px;
+    padding: 0px 16px;
+}
+
+.narrow-wrapper {
+    margin: auto;
+    max-width: 600px;
+    padding: 0px 16px;
+}
+
+h2, h3 {
+    color: #333;
+}
+
+.title-controls {
+    font-size: 1rem;
+}
+
+.right-aligned {
+    text-align: right;
+}
+
+/*
+ * Tables
+ */
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.pagination {
+    margin-top: 20px;
+}
+
+.pagination button {
+    margin: 0 5px;
+    padding: 5px 10px;
+}
+
+/*
+ * Definition lists
+ */
+
+dt {
+    margin-bottom: 8px;
+}
+
+dd {
+    margin-bottom: 16px;
+}
+
+/*
+ * Forms
+ */
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 8px;
+}
+
+input, textarea, select {
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+form input, form textarea, form select {
+    margin-bottom: 16px;
+}
+
+/*
+ * Buttons
+ */
+
+button, .button-link {
+    padding: 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.button-link {
+    display: inline-block;
+    text-decoration: none;
+}
+
+button:hover, .button-link:hover {
+    background-color: #0056b3;
+}
+
+.destructive-btn {
+    background-color: #e00d0d;
+}
+
+.destructive-btn:hover {
+    background-color: #b90000;
+}
