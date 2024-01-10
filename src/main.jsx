@@ -1,9 +1,9 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import { IntlProvider } from 'react-intl'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App.jsx';
+import { IntlProvider } from 'react-intl';
 
-import English from '../lang/en.json'
+import English from '../lang/en.json';
 
 const locale = navigator.language;
 
@@ -13,4 +13,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <App />
         </IntlProvider>
     </React.StrictMode>
-)
+);
