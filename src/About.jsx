@@ -1,8 +1,10 @@
+import { FormattedMessage } from "react-intl";
+
 function About() {
     return (
         <>
-            <h2>About us</h2>
-            <p>About us...</p>
+            <h2><FormattedMessage id="page.about.title" /></h2>
+            <p><FormattedMessage id="page.about.content" /></p>
         </>
     );
 }

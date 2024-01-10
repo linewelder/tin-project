@@ -1,0 +1,9 @@
+{
+    "nav.home": "Home",
+    "nav.about": "About",
+    "button.logout": "Logout",
+    "page.home.title": "Welcome",
+    "page.home.content": "Hello, world!",
+    "page.about.title": "About us",
+    "page.about.content": "About us..."
+}

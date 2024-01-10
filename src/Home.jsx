@@ -1,8 +1,10 @@
+import { FormattedMessage } from "react-intl";
+
 function Home() {
     return (
         <>
-            <h2>Welcome</h2>
-            <p>Hello, world!</p>
+            <h2><FormattedMessage id="page.home.title" /></h2>
+            <p><FormattedMessage id="page.home.content" /></p>
         </>
     );
 }

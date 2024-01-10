@@ -1,4 +1,5 @@
 import { Route, NavLink, Routes, BrowserRouter } from "react-router-dom";
+import { FormattedMessage } from "react-intl";
 import Home from "./Home";
 import About from "./About";
 
@@ -8,12 +9,20 @@ function App() {
             <header>
                 <div className="header-wrapper">
                     <div>
-                        <NavLink to="/">Home</NavLink>
-                        <NavLink to="/about">About</NavLink>
+                        <NavLink to="/">
+                            <FormattedMessage id="nav.home" />
+                        </NavLink>
+                        <NavLink to="/about">
+                            <FormattedMessage id="nav.about" />
+                        </NavLink>
                     </div>
                     <div>
-                        <span id="user-name">Jan Nowak</span>
-                        <button id="logout-btn">Logout</button>
+                        <span id="user-name">
+                            Jan Nowak
+                        </span>
+                        <button id="logout-btn">
+                            <FormattedMessage id="button.logout" />
+                        </button>
                     </div>
                 </div>
             </header>
