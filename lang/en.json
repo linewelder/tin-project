@@ -5,5 +5,14 @@
     "page.home.title": "Welcome",
     "page.home.content": "Hello, world!",
     "page.about.title": "About us",
-    "page.about.content": "About us..."
+    "page.about.content": "About us...",
+    "page.login.title": "Log in",
+    "page.signup.title": "Sign up",
+    "button.login": "Log in",
+    "button.signup": "Sign up",
+    "label.email": "E-mail:",
+    "label.first-name": "First Name:",
+    "label.last-name": "Last Name:",
+    "label.password": "Password:",
+    "label.password-again": "Password Again:"
 }
