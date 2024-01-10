@@ -1,31 +1,13 @@
-import { createBrowserRouter, RouterProvider, Outlet, NavLink } from "react-router-dom";
-import { FormattedMessage } from "react-intl";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+
+import Header from "./components/Header";
 
 import Home from "./pages/Home";
 import About from "./pages/About";
 
 const Layout = () => (
     <>
-        <header>
-            <div className="header-wrapper">
-                <div>
-                    <NavLink to="/">
-                        <FormattedMessage id="nav.home" />
-                    </NavLink>
-                    <NavLink to="/about">
-                        <FormattedMessage id="nav.about" />
-                    </NavLink>
-                </div>
-                <div>
-                    <span id="user-name">
-                        Jan Nowak
-                    </span>
-                    <button id="logout-btn">
-                        <FormattedMessage id="button.logout" />
-                    </button>
-                </div>
-            </div>
-        </header>
+        <Header />
         <div className="wrapper">
             <Outlet />
         </div>

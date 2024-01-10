@@ -1,0 +1,26 @@
+.Header {
+    background-color: #333;
+    color: #fff;
+}
+
+.Header .header-wrapper {
+    margin: auto;
+    max-width: 1200px;
+    min-height: 50px;
+
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Header a {
+    color: #fff;
+    margin: 0 10px;
+    text-decoration: none;
+    padding-bottom: 8px;
+}
+
+.Header a.active {
+    border-bottom: #ddd 1px solid;
+}

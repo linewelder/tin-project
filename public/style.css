@@ -4,37 +4,6 @@ body {
 }
 
 /*
- * Header
- */
-
-header {
-    background-color: #333;
-    color: #fff;
-}
-
-.header-wrapper {
-    margin: auto;
-    max-width: 1200px;
-    min-height: 50px;
-
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-header a {
-    color: #fff;
-    margin: 0 10px;
-    text-decoration: none;
-    padding-bottom: 8px;
-}
-
-header a.active {
-    border-bottom: #ddd 1px solid;
-}
-
-/*
  * General
  */
 
