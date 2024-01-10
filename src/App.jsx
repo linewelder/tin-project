@@ -1,12 +1,15 @@
+import { Route, NavLink, Routes, BrowserRouter } from "react-router-dom";
+import Home from "./Home";
+import About from "./About";
+
 function App() {
     return (
-        <>
+        <BrowserRouter>
             <header>
-                <div class="header-wrapper">
+                <div className="header-wrapper">
                     <div>
-                        <a class="navlink-selected" href="tournaments/index.html">Tournaments</a>
-                        <a href="participants/index.html">Participants</a>
-                        <a href="categories/index.html">Categories</a>
+                        <NavLink to="/">Home</NavLink>
+                        <NavLink to="/about">About</NavLink>
                     </div>
                     <div>
                         <span id="user-name">Jan Nowak</span>
@@ -15,11 +18,13 @@ function App() {
                 </div>
             </header>
 
-            <div class="wrapper">
-                <h2>Welcome</h2>
-                <p>Hello, world!</p>
+            <div className="wrapper">
+                <Routes>
+                    <Route path="/" element={<Home/>}/>
+                    <Route path="/about" element={<About/>}/>
+                </Routes>
             </div>
-        </>
+        </BrowserRouter>
     );
 }
 
