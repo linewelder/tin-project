@@ -13,6 +13,9 @@ function Header() {
                     <NavLink to="/about">
                         <FormattedMessage id="nav.about" />
                     </NavLink>
+                    <NavLink to="/categories">
+                        <FormattedMessage id="page.categories.title" />
+                    </NavLink>
                 </div>
                 <div>
                     <span id="user-name">
