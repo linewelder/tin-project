@@ -1,7 +1,7 @@
 import { Route, NavLink, Routes, BrowserRouter } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
-import Home from "./Home";
-import About from "./About";
+import Home from "./pages/Home";
+import About from "./pages/About";
 
 function App() {
     return (
