@@ -27,7 +27,7 @@ export default function Categories() {
         <>
             <h2><FormattedMessage id="page.categories.title" /></h2>
 
-            <Link to="/categories/create" class="button-link">Add New</Link>
+            <Link to="/categories/create" className="button-link">Add New</Link>
             <table>
                 <thead>
                     <tr>
