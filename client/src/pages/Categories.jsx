@@ -1,22 +1,9 @@
+import axios from "axios";
 import { FormattedMessage } from "react-intl";
 import { Link, useLoaderData } from "react-router-dom";
 
 export async function loader() {
-    const categories = [
-        {
-            id: 1,
-            name: "3x3x3",
-        },
-        {
-            id: 2,
-            name: "4x4x4",
-        },
-        {
-            id: 3,
-            name: "Skewb",
-        },
-    ];
-
+    const categories = (await axios.get("http://localhost:8800/api/categories")).data;
     return { categories };
 }
 
