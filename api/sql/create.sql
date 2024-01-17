@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2024-01-08 17:51:22.611
+-- Last modification date: 2024-01-17 17:40:59.034
 
 -- tables
 -- Table: Category
@@ -24,7 +24,7 @@ CREATE TABLE Tournament (
     Name varchar(50)  NOT NULL,
     Date date  NOT NULL,
     IdCategory int  NOT NULL,
-    Closed bool  NOT NULL,
+    IsClosed tinyint(1)  NOT NULL,
     Organizer int  NOT NULL,
     Address varchar(150)  NOT NULL,
     CONSTRAINT Tournament_pk PRIMARY KEY (IdTournament)
@@ -41,9 +41,11 @@ CREATE TABLE TournamentParticipant (
 -- Table: User
 CREATE TABLE User (
     IdUser int  NOT NULL,
+    Email varchar(75)  NOT NULL,
+    Password char(60)  NOT NULL,
     FirstName varchar(30)  NOT NULL,
     LastName varchar(30)  NOT NULL,
-    Admin bool  NOT NULL,
+    IsAdmin tinyint(1)  NOT NULL,
     CONSTRAINT User_pk PRIMARY KEY (IdUser)
 );
 
