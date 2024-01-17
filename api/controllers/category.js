@@ -1,33 +1,36 @@
-const categories = [
-    {
-        id: 1,
-        name: "3x3x3",
-        description: "Klasyczna najzwyczajniejsza kosta Rubika."
-    },
-    {
-        id: 2,
-        name: "4x4x4",
-        description: "Nadal nie zbyt dziwna kostka, tylko trochę większa."
-    },
-    {
-        id: 3,
-        name: "Skewb",
-        description: "o_0 co to?"
-    },
-];
+import db from "../db.js";
+
+function toModel(row) {
+    return {
+        id: row.IdCategory,
+        name: row.Name,
+        description: row.Description
+    };
+}
 
 export const getAll = (req, res) => {
-    res.json(categories);
+    db.query("SELECT * FROM Category", (err, data) => {
+        if (err) throw err;
+
+        const categories = data.map(toModel);
+        return res.json(categories);
+    });
 };
 
 export const getOne = (req, res) => {
     const id = req.params.id;
 
-    const category = categories.find(cat => cat.id == id);
-    if (category === undefined) {
-        response.status(404).json({ error: "Category not found." });
-        return;
-    }
+    db.query(
+        "SELECT * FROM Category WHERE IdCategory = ?", [id],
+        (err, data) => {
+            if (err) throw err;
 
-    res.json(categories);
+            if (data.length == 0) {
+                res.status(404).json({ "error": `Category with ID ${id} not found` });
+                return;
+            }
+
+            const category = toModel(data[0]);
+            res.json(category);
+        });
 };
