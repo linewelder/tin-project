@@ -8,13 +8,13 @@ function toModel(row) {
     };
 }
 
-export const getAll = async (req, res) => {
+export async function getAll(req, res) {
     const rows = await db.query("SELECT * FROM Category");
     const categories = rows.map(toModel);
     return res.json(categories);
 };
 
-export const getOne = async (req, res) => {
+export async function getOne(req, res) {
     const id = req.params.id;
 
     const rows = await db.query("SELECT * FROM Category WHERE IdCategory = ?", [id]);
