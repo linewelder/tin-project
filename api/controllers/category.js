@@ -8,29 +8,21 @@ function toModel(row) {
     };
 }
 
-export const getAll = (req, res) => {
-    db.query("SELECT * FROM Category", (err, data) => {
-        if (err) throw err;
-
-        const categories = data.map(toModel);
-        return res.json(categories);
-    });
+export const getAll = async (req, res) => {
+    const rows = await db.query("SELECT * FROM Category");
+    const categories = rows.map(toModel);
+    return res.json(categories);
 };
 
-export const getOne = (req, res) => {
+export const getOne = async (req, res) => {
     const id = req.params.id;
 
-    db.query(
-        "SELECT * FROM Category WHERE IdCategory = ?", [id],
-        (err, data) => {
-            if (err) throw err;
+    const rows = await db.query("SELECT * FROM Category WHERE IdCategory = ?", [id]);
+    if (rows.length == 0) {
+        res.status(404).json({ "error": `Category with ID ${id} not found` });
+        return;
+    }
 
-            if (data.length == 0) {
-                res.status(404).json({ "error": `Category with ID ${id} not found` });
-                return;
-            }
-
-            const category = toModel(data[0]);
-            res.json(category);
-        });
+    const category = toModel(rows[0]);
+    res.json(category);
 };

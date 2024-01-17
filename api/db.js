@@ -1,4 +1,5 @@
 import mysql from "mysql";
+import { promisify } from "util";
 
 const db = mysql.createConnection({
     host: "localhost",
@@ -7,4 +8,6 @@ const db = mysql.createConnection({
     database: "tin"
 });
 
-export default db;
+export default {
+    query: promisify(db.query).bind(db)
+};
