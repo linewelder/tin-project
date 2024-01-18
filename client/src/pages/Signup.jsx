@@ -39,31 +39,31 @@ function Signup() {
             <h2><FormattedMessage id="page.signup.title" /></h2>
 
             <form>
-                <label for="email">
+                <label htmlFor="email">
                     <FormattedMessage id="label.email" />
                 </label>
                 <input id="email" type="email" name="email"
                     value={inputs.email} onChange={onInputsChanged} />
 
-                <label for="firstName">
+                <label htmlFor="firstName">
                     <FormattedMessage id="label.first-name" />
                 </label>
                 <input id="firstName" type="text" name="firstName"
                     value={inputs.firstName} onChange={onInputsChanged} />
 
-                <label for="lastName">
+                <label htmlFor="lastName">
                     <FormattedMessage id="label.last-name" />
                 </label>
                 <input id="lastName" type="text" name="lastName"
                     value={inputs.lastName} onChange={onInputsChanged} />
 
-                <label for="password">
+                <label htmlFor="password">
                     <FormattedMessage id="label.password" />
                 </label>
                 <input id="password" type="password" name="password"
                     value={inputs.password} onChange={onInputsChanged} />
 
-                <label for="passwordAgain">
+                <label htmlFor="passwordAgain">
                     <FormattedMessage id="label.password-again" />
                 </label>
                 <input id="passwordAgain" type="password" name="passwordAgain"

@@ -7,12 +7,12 @@ function Login() {
             <h2><FormattedMessage id="page.login.title" /></h2>
 
             <form>
-                <label for="email">
+                <label htmlFor="email">
                     <FormattedMessage id="label.email" />
                 </label>
                 <input id="email" type="text" />
 
-                <label for="password">
+                <label htmlFor="password">
                     <FormattedMessage id="label.password" />
                 </label>
                 <input id="password" type="password" />
