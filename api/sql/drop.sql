@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2024-01-08 17:51:22.611
+-- Last modification date: 2024-01-18 19:59:49.454
 
 -- foreign keys
 ALTER TABLE Tournament

@@ -1,10 +1,10 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2024-01-17 17:40:59.034
+-- Last modification date: 2024-01-18 19:59:49.454
 
 -- tables
 -- Table: Category
 CREATE TABLE Category (
-    IdCategory int  NOT NULL,
+    IdCategory int  NOT NULL AUTO_INCREMENT,
     Name varchar(20)  NOT NULL,
     Description varchar(200)  NOT NULL,
     CONSTRAINT Category_pk PRIMARY KEY (IdCategory)
@@ -12,7 +12,7 @@ CREATE TABLE Category (
 
 -- Table: Participant
 CREATE TABLE Participant (
-    IdParticipant int  NOT NULL,
+    IdParticipant int  NOT NULL AUTO_INCREMENT,
     FirstName varchar(30)  NOT NULL,
     LastName varchar(30)  NOT NULL,
     CONSTRAINT Participant_pk PRIMARY KEY (IdParticipant)
@@ -20,7 +20,7 @@ CREATE TABLE Participant (
 
 -- Table: Tournament
 CREATE TABLE Tournament (
-    IdTournament int  NOT NULL,
+    IdTournament int  NOT NULL AUTO_INCREMENT,
     Name varchar(50)  NOT NULL,
     Date date  NOT NULL,
     IdCategory int  NOT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE TournamentParticipant (
 
 -- Table: User
 CREATE TABLE User (
-    IdUser int  NOT NULL,
+    IdUser int  NOT NULL AUTO_INCREMENT,
     Email varchar(75)  NOT NULL,
     Password char(60)  NOT NULL,
     FirstName varchar(30)  NOT NULL,
