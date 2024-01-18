@@ -12,7 +12,7 @@ function Signup() {
         passwordAgain: ""
     });
 
-    const [error, setError] = useState(null);
+    const [errors, setErrors] = useState([]);
 
     const navigate = useNavigate();
 
@@ -26,11 +26,34 @@ function Signup() {
     const onSubmit = async (e) => {
         e.preventDefault();
 
+        const errors = [];
+
+        const validateNotEmpty = (name) => {
+            if (inputs[name].length === 0) {
+                errors.push(<FormattedMessage id={`error.${name}.empty`} />);
+            }
+        };
+
+        validateNotEmpty("email");
+        validateNotEmpty("firstName");
+        validateNotEmpty("lastName");
+        validateNotEmpty("password");
+
+        if (inputs.passwordAgain !== inputs.password) {
+            errors.push(<FormattedMessage id={`error.password.doesnt-match`} />);
+        }
+
+        if (errors.length > 0) {
+            setErrors(errors);
+            return;
+        }
+
         try {
             await axios.post("http://localhost:8800/api/auth/register", inputs);
             navigate("/");
         } catch (error) {
-            setError(error);
+            errors.push(error.message);
+            setErrors(errors);
         }
     }
 
@@ -72,7 +95,11 @@ function Signup() {
                 <button onClick={onSubmit}><FormattedMessage id="button.signup" /></button>
             </form>
 
-            {error && <p className="error">{error + ""}</p>}
+            <ul className="error">
+                {errors.map((error, index) => (
+                    <li key={index}>{error}</li>
+                ))}
+            </ul>
 
             <p className="right-aligned">
                 <Link to="/login"><FormattedMessage id="page.login.title" /></Link>
