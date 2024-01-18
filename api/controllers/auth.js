@@ -26,3 +26,22 @@ export async function register(req, res) {
 
     res.json(newUser);
 }
+
+export async function login(req, res) {
+    const rows = await db.query(
+        "SELECT * FROM User WHERE Email = ?",
+        [req.body.email]);
+
+    if (rows.length === 0) {
+        res.status(404).json({ "error": "Wrong username or password" });
+        return;
+    }
+
+    const passwordCorrect = bcrypt.compareSync(req.body.password, rows[0].Password);
+    if (!passwordCorrect) {
+        res.status(401).json({ "error": "Wrong username or password" });
+        return;
+    }
+
+    res.status(200).json({});
+}
