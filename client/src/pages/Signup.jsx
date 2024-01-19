@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api.js";
 
 function Signup() {
     const [inputs, setInputs] = useState({
@@ -55,16 +55,11 @@ function Signup() {
             return;
         }
 
-        try {
-            await axios.post("http://localhost:8800/api/auth/register", inputs);
+        const [result, error] = await api.post("/auth/register", inputs);
+        if (result) {
             navigate("/");
-        } catch (error) {
-            if (error.response) {
-                errors.push(
-                    intl.formatMessage({ id: `error.${error.response.data.error}` }));
-            } else {
-                errors.push(error.message);
-            }
+        } else {
+            errors.push(error.format(intl));
             setErrors(errors);
         }
     }

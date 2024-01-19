@@ -1,9 +1,10 @@
-import axios from "axios";
 import { FormattedMessage } from "react-intl";
 import { Link, useLoaderData } from "react-router-dom";
+import api from "../api";
 
 export async function loader() {
-    const categories = (await axios.get("http://localhost:8800/api/categories")).data;
+    const [categories, error] = await api.get("/categories");
+    if (error) throw error;
     return { categories };
 }
 
