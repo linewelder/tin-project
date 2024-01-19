@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api.js";
+import Validator from "../Validator.js";
 
 function Signup() {
     const [inputs, setInputs] = useState({
@@ -24,32 +25,19 @@ function Signup() {
         });
     };
 
-    // Zwraca listę błędów walidacji.
-    const validate = () => {
-        const errors = [];
-
-        const validateNotEmpty = (name) => {
-            if (inputs[name].length === 0) {
-                errors.push(intl.formatMessage({ id: `error.${name}.empty` }));
-            }
-        };
-
-        validateNotEmpty("email");
-        validateNotEmpty("firstName");
-        validateNotEmpty("lastName");
-        validateNotEmpty("password");
-
-        if (inputs.passwordAgain !== inputs.password) {
-            errors.push(intl.formatMessage({ id: `error.password.doesnt-match` }));
-        }
-
-        return errors;
-    };
-
     const onSubmit = async (e) => {
         e.preventDefault();
 
-        const errors = validate();
+        const validator = new Validator(intl, inputs);
+        validator.notEmpty("email");
+        validator.notEmpty("firstName");
+        validator.notEmpty("lastName");
+        validator.notEmpty("password");
+        validator.validate("passwordAgain",
+            x => x === inputs.password,
+            "error.password.doesnt-match");
+
+        const errors = validator.getErrors();
         if (errors.length > 0) {
             setErrors(errors);
             return;

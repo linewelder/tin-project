@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api.js";
+import Validator from "../Validator.js";
 
 function Login() {
     const [inputs, setInputs] = useState({
@@ -20,26 +21,14 @@ function Login() {
         });
     };
 
-    // Zwraca listę błędów walidacji.
-    const validate = () => {
-        const errors = [];
-
-        const validateNotEmpty = (name) => {
-            if (inputs[name].length === 0) {
-                errors.push(intl.formatMessage({ id: `error.${name}.empty` }));
-            }
-        };
-
-        validateNotEmpty("email");
-        validateNotEmpty("password");
-
-        return errors;
-    };
-
     const onSubmit = async (e) => {
         e.preventDefault();
 
-        const errors = validate();
+        const validator = new Validator(intl, inputs);
+        validator.notEmpty("email");
+        validator.notEmpty("password");
+
+        const errors = validator.getErrors();
         if (errors.length > 0) {
             setErrors(errors);
             return;
