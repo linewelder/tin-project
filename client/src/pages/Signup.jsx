@@ -52,7 +52,11 @@ function Signup() {
             await axios.post("http://localhost:8800/api/auth/register", inputs);
             navigate("/");
         } catch (error) {
-            errors.push(error.message);
+            if (error.response) {
+                errors.push(error.response.data.error);
+            } else {
+                errors.push(error.message);
+            }
             setErrors(errors);
         }
     }
