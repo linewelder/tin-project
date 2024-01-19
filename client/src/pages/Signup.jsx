@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -15,6 +15,7 @@ function Signup() {
     const [errors, setErrors] = useState([]);
 
     const navigate = useNavigate();
+    const intl = useIntl();
 
     const onInputsChanged = (e) => {
         setInputs({
@@ -29,7 +30,7 @@ function Signup() {
 
         const validateNotEmpty = (name) => {
             if (inputs[name].length === 0) {
-                errors.push(<FormattedMessage id={`error.${name}.empty`} />);
+                errors.push(intl.formatMessage({ id: `error.${name}.empty` }));
             }
         };
 
@@ -39,7 +40,7 @@ function Signup() {
         validateNotEmpty("password");
 
         if (inputs.passwordAgain !== inputs.password) {
-            errors.push(<FormattedMessage id={`error.password.doesnt-match`} />);
+            errors.push(intl.formatMessage({ id: `error.password.doesnt-match` }));
         }
 
         return errors;
@@ -60,7 +61,7 @@ function Signup() {
         } catch (error) {
             if (error.response) {
                 errors.push(
-                    <FormattedMessage id={`error.${error.response.data.error}`} />);
+                    intl.formatMessage({ id: `error.${error.response.data.error}` }));
             } else {
                 errors.push(error.message);
             }
