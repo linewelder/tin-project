@@ -23,9 +23,8 @@ function Signup() {
         });
     };
 
-    const onSubmit = async (e) => {
-        e.preventDefault();
-
+    // Zwraca listę błędów walidacji.
+    const validate = () => {
         const errors = [];
 
         const validateNotEmpty = (name) => {
@@ -43,6 +42,13 @@ function Signup() {
             errors.push(<FormattedMessage id={`error.password.doesnt-match`} />);
         }
 
+        return errors;
+    };
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+
+        const errors = validate();
         if (errors.length > 0) {
             setErrors(errors);
             return;
