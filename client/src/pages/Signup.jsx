@@ -59,7 +59,8 @@ function Signup() {
             navigate("/");
         } catch (error) {
             if (error.response) {
-                errors.push(error.response.data.error);
+                errors.push(
+                    <FormattedMessage id={`error.${error.response.data.error}`} />);
             } else {
                 errors.push(error.message);
             }
