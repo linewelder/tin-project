@@ -24,7 +24,12 @@ export async function register(req, res) {
         [[newUser.email, newUser.password, newUser.firstName, newUser.lastName, newUser.admin ? 1 : 0]]);
     newUser.id = result.insertId;
 
-    res.json(newUser);
+    res.json({
+        email: newUser.email,
+        firstName: newUser.firstName,
+        lastName: newUser.lastName,
+        admin: false
+    });
 }
 
 export async function login(req, res) {
