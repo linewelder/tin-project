@@ -19,7 +19,7 @@ export async function getOne(req, res) {
 
     const rows = await db.query("SELECT * FROM Category WHERE IdCategory = ?", [id]);
     if (rows.length == 0) {
-        res.status(404).json({ "error": `Category with ID ${id} not found` });
+        res.status(404).json({ "error": "not-found" });
         return;
     }
 

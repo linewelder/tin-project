@@ -5,7 +5,7 @@ export async function register(req, res) {
     const existingUser = await db.query("SELECT * FROM User WHERE Email = ?", [req.body.email]);
     if (existingUser.length > 0) {
         return res.status(409)
-            .json({ error: "User with this e-mail already exists" });
+            .json({ error: "email-exists" });
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -38,13 +38,13 @@ export async function login(req, res) {
         [req.body.email]);
 
     if (rows.length === 0) {
-        res.status(404).json({ "error": "Wrong username or password" });
+        res.status(404).json({ "error": "wrong-login-data" });
         return;
     }
 
     const passwordCorrect = bcrypt.compareSync(req.body.password, rows[0].Password);
     if (!passwordCorrect) {
-        res.status(401).json({ "error": "Wrong username or password" });
+        res.status(401).json({ "error": "wrong-login-data" });
         return;
     }
 
