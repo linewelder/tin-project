@@ -1,8 +1,12 @@
+import { useContext } from "react";
 import { FormattedMessage } from "react-intl";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import './Header.jsx.css';
+import { ApiContext } from "../apiContext";
 
 function Header() {
+    const api = useContext(ApiContext);
+
     return (
         <header className="Header">
             <div className="header-wrapper">
@@ -18,12 +22,20 @@ function Header() {
                     </NavLink>
                 </div>
                 <div>
-                    <span id="user-name">
-                        Jan Nowak
-                    </span>
-                    <button id="logout-btn">
-                        <FormattedMessage id="button.logout" />
-                    </button>
+                    {api.currentUser ? (
+                        <>
+                            <span id="user-name">
+                                {api.currentUser.firstName} {api.currentUser.lastName}
+                            </span>
+                            <button id="logout-btn" onClick={() => api.logout()}>
+                                <FormattedMessage id="button.logout" />
+                            </button>
+                        </>
+                    ) : (
+                        <Link to="/login" className="button-link">
+                            <FormattedMessage id="button.login" />
+                        </Link>
+                    )}
                 </div>
             </div>
         </header>
