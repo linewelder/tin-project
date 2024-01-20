@@ -5,18 +5,21 @@ import { ApiContext } from "../apiContext";
 
 export default function Categories() {
     const [ categories, setCategories ] = useState([]);
+    const [ error, setError ] = useState(null);
 
     const api = useContext(ApiContext);
     useEffect(() => {
         (async () => {
             const [categories, error] = await api.get("/categories");
             if (error) {
-                setCategories([]);
-            } else {
-                setCategories(categories);
+                setError(error);
+                return;
             }
+
+            setCategories(categories);
         })();
     }, []);
+    useEffect(() => { if (error) throw error; }, [error]);
 
     return (
         <>
