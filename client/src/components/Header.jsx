@@ -7,6 +7,11 @@ import { ApiContext } from "../apiContext";
 function Header() {
     const api = useContext(ApiContext);
 
+    const logout = () => {
+        api.logout();
+        window.location.reload();
+    };
+
     return (
         <header className="Header">
             <div className="header-wrapper">
@@ -27,7 +32,7 @@ function Header() {
                             <span id="user-name">
                                 {api.currentUser.firstName} {api.currentUser.lastName}
                             </span>
-                            <button id="logout-btn" onClick={() => api.logout()}>
+                            <button id="logout-btn" onClick={logout}>
                                 <FormattedMessage id="button.logout" />
                             </button>
                         </>
