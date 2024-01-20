@@ -1,5 +1,16 @@
 import db from "../db.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
+function createAuthToken(user) {
+    const claims = {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        admin: user.admin
+    };
+
+    return jwt.sign(claims, "mysecret");
+}
 
 export async function register(req, res) {
     const existingUser = await db.query("SELECT * FROM User WHERE Email = ?", [req.body.email]);
@@ -28,7 +39,8 @@ export async function register(req, res) {
         email: newUser.email,
         firstName: newUser.firstName,
         lastName: newUser.lastName,
-        admin: false
+        admin: false,
+        token: createAuthToken(newUser)
     });
 }
 
@@ -48,5 +60,12 @@ export async function login(req, res) {
         return;
     }
 
-    res.status(200).json({});
+    const user = {
+        email: rows[0].Email,
+        firstName: rows[0].FirstName,
+        lastName: rows[0].LastName,
+        admin: rows[0].IsAdmin
+    };
+    user.token = createAuthToken(user);
+    res.json(user);
 }
