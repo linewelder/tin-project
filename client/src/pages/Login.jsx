@@ -34,7 +34,7 @@ function Login() {
             return;
         }
 
-        const [result, error] = await api.post("/auth/login", inputs);
+        const [result, error] = await api.login(inputs);
         if (result) {
             navigate("/");
         } else {
