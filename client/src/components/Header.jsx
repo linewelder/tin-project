@@ -16,12 +16,6 @@ function Header() {
         <header className="Header">
             <div className="header-wrapper">
                 <div>
-                    <NavLink to="/">
-                        <FormattedMessage id="nav.home" />
-                    </NavLink>
-                    <NavLink to="/about">
-                        <FormattedMessage id="nav.about" />
-                    </NavLink>
                     <NavLink to="/categories">
                         <FormattedMessage id="page.categories.title" />
                     </NavLink>

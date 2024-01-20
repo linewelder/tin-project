@@ -1,6 +1,4 @@
 {
-    "nav.home": "Home",
-    "nav.about": "About",
     "button.add-new": "Add New",
     "button.logout": "Logout",
     "error.access-denied": "Access denied",
@@ -16,10 +14,6 @@
     "error.password.doesnt-match": "Passwords do not match",
     "table.category.id": "ID",
     "table.category.name": "Name",
-    "page.home.title": "Welcome",
-    "page.home.content": "Hello, world!",
-    "page.about.title": "About us",
-    "page.about.content": "About us...",
     "page.categories.title": "Categories",
     "page.login.title": "Log in",
     "page.signup.title": "Sign up",

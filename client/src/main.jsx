@@ -6,8 +6,6 @@ import { ApiContextProvider } from './apiContext.jsx';
 
 import Header from "./components/Header";
 
-import Home from "./pages/Home";
-import About from "./pages/About";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Categories from "./pages/Categories";
@@ -38,14 +36,6 @@ const router = createBrowserRouter([
         path: "/",
         element: <Layout />,
         children: [
-            {
-                path: "/",
-                element: <Home />,
-            },
-            {
-                path: "/about",
-                element: <About />,
-            },
             {
                 path: "/categories",
                 element: <Categories />,
