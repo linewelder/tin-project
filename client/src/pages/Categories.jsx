@@ -1,15 +1,22 @@
 import { FormattedMessage } from "react-intl";
-import { Link, useLoaderData } from "react-router-dom";
-import api from "../api";
-
-export async function loader() {
-    const [categories, error] = await api.get("/categories");
-    if (error) throw error;
-    return { categories };
-}
+import { Link } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { ApiContext } from "../apiContext";
 
 export default function Categories() {
-    const { categories } = useLoaderData();
+    const [ categories, setCategories ] = useState([]);
+
+    const api = useContext(ApiContext);
+    useEffect(() => {
+        (async () => {
+            const [categories, error] = await api.get("/categories");
+            if (error) {
+                setCategories([]);
+            } else {
+                setCategories(categories);
+            }
+        })();
+    }, []);
 
     return (
         <>

@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link, useNavigate } from "react-router-dom";
-import api from "../api.js";
 import Validator from "../Validator.js";
+import { ApiContext } from "../apiContext.jsx";
 
 function Login() {
     const [inputs, setInputs] = useState({
@@ -13,6 +13,7 @@ function Login() {
 
     const navigate = useNavigate();
     const intl = useIntl();
+    const api = useContext(ApiContext);
 
     const onInputsChanged = (e) => {
         setInputs({

@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link, useNavigate } from "react-router-dom";
-import api from "../api.js";
 import Validator from "../Validator.js";
+import { ApiContext } from "../apiContext.jsx";
 
 function Signup() {
     const [inputs, setInputs] = useState({
@@ -17,6 +17,7 @@ function Signup() {
 
     const navigate = useNavigate();
     const intl = useIntl();
+    const api = useContext(ApiContext);
 
     const onInputsChanged = (e) => {
         setInputs({
@@ -43,7 +44,7 @@ function Signup() {
             return;
         }
 
-        const [result, error] = await api.post("/auth/register", inputs);
+        const [result, error] = await api.register(inputs);
         if (result) {
             navigate("/");
         } else {

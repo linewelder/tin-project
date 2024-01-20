@@ -6,7 +6,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import Categories, { loader } from "./pages/Categories";
+import Categories from "./pages/Categories";
 
 const Layout = () => (
     <>
@@ -42,7 +42,6 @@ const router = createBrowserRouter([
             {
                 path: "/categories",
                 element: <Categories />,
-                loader: loader,
             }
         ],
     },
