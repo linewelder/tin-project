@@ -47,7 +47,7 @@ export default function CategoryDetails() {
                 <p>{category.description}</p>
             </>)}
 
-            {currentTournaments && (<>
+            {currentTournaments.length > 0 && (<>
                 <h3><FormattedMessage id="page.categories.details.current-tournaments" /></h3>
                 <table>
                     <thead>
