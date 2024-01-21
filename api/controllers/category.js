@@ -37,3 +37,24 @@ export async function getTournamentHistory(req, res) {
     const tournaments = rows.map(toTournament);
     res.json(tournaments);
 };
+
+export async function getBestParticipants(req, res) {
+    const id = req.params.id;
+
+    const rows = await db.query(
+        "SELECT Participant.IdParticipant, FirstName, LastName, Date, Time " +
+        "FROM TournamentParticipant " +
+        "JOIN Tournament ON Tournament.IdTournament = TournamentParticipant.IdTournament " +
+        "JOIN Participant ON Participant.IdParticipant = TournamentParticipant.IdParticipant " +
+        "WHERE IdCategory = ? " +
+        "ORDER BY Time " +
+        "LIMIT 10",
+        [id]);
+    res.json(rows.map(row => ({
+        idParticipant: row.IdParticipant,
+        firstName: row.FirstName,
+        lastName: row.LastName,
+        date: row.Date,
+        result: row.Time,
+    })));
+}
