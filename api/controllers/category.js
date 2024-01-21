@@ -1,16 +1,9 @@
 import db from "../db.js";
-
-function toModel(row) {
-    return {
-        id: row.IdCategory,
-        name: row.Name,
-        description: row.Description
-    };
-}
+import { toCategory } from "../models.js";
 
 export async function getAll(req, res) {
     const rows = await db.query("SELECT * FROM Category");
-    const categories = rows.map(toModel);
+    const categories = rows.map(toCategory);
     return res.json(categories);
 };
 
@@ -23,6 +16,6 @@ export async function getOne(req, res) {
         return;
     }
 
-    const category = toModel(rows[0]);
+    const category = toCategory(rows[0]);
     res.json(category);
 };
