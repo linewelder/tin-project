@@ -12,6 +12,7 @@ export default function CategoryDetails() {
 
     useEffect(() => { if (error) throw error; }, [error]);
     useApiFetch(`/categories/${id}`, setCategory, setError);
+    useApiFetch(`/categories/${id}/current-tournaments`, setCurrentTournaments, setError);
 
     const deleteConfirm = useRef(null);
 
@@ -46,6 +47,29 @@ export default function CategoryDetails() {
                 </h2>
 
                 <p>{category.description}</p>
+            </>)}
+
+            {currentTournaments && (<>
+                <h3><FormattedMessage id="page.categories.details.current-tournaments" /></h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th><FormattedMessage id="table.tournament.name" /></th>
+                            <th><FormattedMessage id="table.tournament.date" /></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {currentTournaments.map(tournament => (
+                            <tr key={tournament.id}>
+                                <td>
+                                    <Link to={`/tournaments/${tournament.id}`}>
+                                        {tournament.name}
+                                    </Link></td>
+                                <td>{tournament.date}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </>)}
         </>
     );
