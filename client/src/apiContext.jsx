@@ -70,17 +70,21 @@ export function ApiContextProvider({ children }) {
     );
 }
 
-export function useApiFetch(path, setResult, setError) {
+export function useApiFetch(path, defaultValue, onError) {
+    const [result, setResult] = useState(defaultValue);
     const api = useContext(ApiContext);
+
     useEffect(() => {
         (async () => {
             const [result, error] = await api.get(path);
             if (error) {
-                setError(error);
+                onError(error);
                 return;
             }
 
             setResult(result);
         })();
     }, []);
+
+    return result;
 }

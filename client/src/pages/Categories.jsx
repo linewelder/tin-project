@@ -4,11 +4,10 @@ import { useEffect, useState } from "react";
 import { useApiFetch } from "../apiContext.jsx";
 
 export default function Categories() {
-    const [ categories, setCategories ] = useState([]);
     const [ error, setError ] = useState(null);
-
     useEffect(() => { if (error) throw error; }, [error]);
-    useApiFetch("/categories", setCategories, setError);
+
+    const categories = useApiFetch("/categories", [], setError);
 
     return (
         <>

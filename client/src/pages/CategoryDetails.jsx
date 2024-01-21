@@ -6,13 +6,11 @@ import { useApiFetch } from "../apiContext.jsx";
 export default function CategoryDetails() {
     const { id } = useParams();
 
-    const [category, setCategory] = useState(null);
-    const [currentTournaments, setCurrentTournaments] = useState([]);
     const [error, setError] = useState(null);
-
     useEffect(() => { if (error) throw error; }, [error]);
-    useApiFetch(`/categories/${id}`, setCategory, setError);
-    useApiFetch(`/categories/${id}/current-tournaments`, setCurrentTournaments, setError);
+
+    const category = useApiFetch(`/categories/${id}`, null, setError);
+    const currentTournaments = useApiFetch(`/categories/${id}/current-tournaments`, [], setError);
 
     const deleteConfirm = useRef(null);
 
