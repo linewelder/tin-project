@@ -28,3 +28,12 @@ export async function getCurrentTournaments(req, res) {
     const tournaments = rows.map(toTournament);
     res.json(tournaments);
 };
+
+export async function getTournamentHistory(req, res) {
+    const id = req.params.id;
+
+    const rows = await db.query(
+        "SELECT * FROM Tournament WHERE IdCategory = ? AND IsClosed = 1", [id]);
+    const tournaments = rows.map(toTournament);
+    res.json(tournaments);
+};
