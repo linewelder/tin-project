@@ -9,8 +9,10 @@ export default function CategoryDetails() {
     const [error, setError] = useState(null);
     useEffect(() => { if (error) throw error; }, [error]);
 
-    const category = useApiFetch(`/categories/${id}`, null, setError);
-    const currentTournaments = useApiFetch(`/categories/${id}/current-tournaments`, [], setError);
+    const path = `/categories/${id}`;
+    const category = useApiFetch(path, null, setError);
+    const currentTournaments = useApiFetch(path + "/current-tournaments", [], setError);
+    const tournamentHistory = useApiFetch(path + "/tournament-history", [], setError);
 
     const deleteConfirm = useRef(null);
 
@@ -58,6 +60,29 @@ export default function CategoryDetails() {
                     </thead>
                     <tbody>
                         {currentTournaments.map(tournament => (
+                            <tr key={tournament.id}>
+                                <td>
+                                    <Link to={`/tournaments/${tournament.id}`}>
+                                        {tournament.name}
+                                    </Link></td>
+                                <td>{tournament.date}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </>)}
+
+            {tournamentHistory.length > 0 && (<>
+                <h3><FormattedMessage id="page.categories.details.tournament-history" /></h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th><FormattedMessage id="table.tournament.name" /></th>
+                            <th><FormattedMessage id="table.tournament.date" /></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {tournamentHistory.map(tournament => (
                             <tr key={tournament.id}>
                                 <td>
                                     <Link to={`/tournaments/${tournament.id}`}>
