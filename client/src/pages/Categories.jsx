@@ -28,7 +28,11 @@ export default function Categories() {
                     {categories.map(category =>
                         <tr key={category.id}>
                             <td>{category.id}</td>
-                            <td>{category.name}</td>
+                            <td>
+                                <Link to={`${category.id}`}>
+                                    {category.name}
+                                </Link>
+                            </td>
                         </tr>
                     )}
                 </tbody>

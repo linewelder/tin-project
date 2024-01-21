@@ -9,6 +9,7 @@ import Header from "./components/Header";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Categories from "./pages/Categories";
+import CategoryDetails from './pages/CategoryDetails.jsx';
 
 import English from '../lang/en.json';
 const locale = navigator.language;
@@ -39,7 +40,11 @@ const router = createBrowserRouter([
             {
                 path: "/categories",
                 element: <Categories />,
-            }
+            },
+            {
+                path: "/categories/:id",
+                element: <CategoryDetails />,
+            },
         ],
     },
     {
