@@ -13,6 +13,7 @@ export default function CategoryDetails() {
     const category = useApiFetch(path, null, setError);
     const currentTournaments = useApiFetch(path + "/current-tournaments", [], setError);
     const tournamentHistory = useApiFetch(path + "/tournament-history", [], setError);
+    const bestParticipants = useApiFetch(path + "/best-participants", [], setError);
 
     const deleteConfirm = useRef(null);
 
@@ -91,6 +92,28 @@ export default function CategoryDetails() {
                                 <td>
                                     <FormattedDate value={tournament.date} />
                                 </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </>)}
+
+            {bestParticipants.length > 0 && (<>
+                <h3><FormattedMessage id="page.categories.details.best-participants" /></h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th><FormattedMessage id="table.best-participants.full-name" /></th>
+                            <th><FormattedMessage id="table.best-participants.date" /></th>
+                            <th><FormattedMessage id="table.best-participants.result" /></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {bestParticipants.map(result => (
+                            <tr key={result.participantId}>
+                                <td>{result.firstName} {result.lastName}</td>
+                                <td><FormattedDate value={result.date} /></td>
+                                <td>{result.result}</td>
                             </tr>
                         ))}
                     </tbody>
