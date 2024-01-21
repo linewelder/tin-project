@@ -118,6 +118,10 @@ button, .button-link {
     font-size: 1rem;
 }
 
+button:not(:first-child) {
+    margin-left: 8px;
+}
+
 .button-link {
     display: inline-block;
     text-decoration: none;
