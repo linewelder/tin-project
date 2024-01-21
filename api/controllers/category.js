@@ -51,7 +51,7 @@ export async function getBestParticipants(req, res) {
         "LIMIT 10",
         [id]);
     res.json(rows.map(row => ({
-        idParticipant: row.IdParticipant,
+        participantId: row.IdParticipant,
         firstName: row.FirstName,
         lastName: row.LastName,
         date: row.Date,
