@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import Error from "./Error.js";
 
@@ -68,4 +68,19 @@ export function ApiContextProvider({ children }) {
             {children}
         </ApiContext.Provider>
     );
+}
+
+export function useApiFetch(path, setResult, setError) {
+    const api = useContext(ApiContext);
+    useEffect(() => {
+        (async () => {
+            const [result, error] = await api.get(path);
+            if (error) {
+                setError(error);
+                return;
+            }
+
+            setResult(result);
+        })();
+    }, []);
 }

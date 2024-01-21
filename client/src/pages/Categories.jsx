@@ -1,25 +1,14 @@
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
-import { ApiContext } from "../apiContext";
+import { useEffect, useState } from "react";
+import { useApiFetch } from "../apiContext.jsx";
 
 export default function Categories() {
     const [ categories, setCategories ] = useState([]);
     const [ error, setError ] = useState(null);
 
-    const api = useContext(ApiContext);
-    useEffect(() => {
-        (async () => {
-            const [categories, error] = await api.get("/categories");
-            if (error) {
-                setError(error);
-                return;
-            }
-
-            setCategories(categories);
-        })();
-    }, []);
     useEffect(() => { if (error) throw error; }, [error]);
+    useApiFetch("/categories", setCategories, setError);
 
     return (
         <>
