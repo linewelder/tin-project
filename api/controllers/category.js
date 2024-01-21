@@ -1,5 +1,5 @@
 import db from "../db.js";
-import { toCategory } from "../models.js";
+import { toCategory, toTournament } from "../models.js";
 
 export async function getAll(req, res) {
     const rows = await db.query("SELECT * FROM Category");
@@ -18,4 +18,13 @@ export async function getOne(req, res) {
 
     const category = toCategory(rows[0]);
     res.json(category);
+};
+
+export async function getCurrentTournaments(req, res) {
+    const id = req.params.id;
+
+    const rows = await db.query(
+        "SELECT * FROM Tournament WHERE IdCategory = ? AND IsClosed = 0", [id]);
+    const tournaments = rows.map(toTournament);
+    res.json(tournaments);
 };
