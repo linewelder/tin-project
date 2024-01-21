@@ -34,17 +34,17 @@ export default function CategoryDetails() {
                     </a>
                 </dialog>
 
-                <h2>
-                    {category.name}
-                    <span className="title-controls">
-                        <Link to="edit">
+                <div className="header-with-buttons">
+                    <h2>{category.name}</h2>
+                    <div>
+                        <Link to="edit" className="button-link">
                             <FormattedMessage id="button.edit" />
                         </Link>
-                        <a href="#" onClick={() => deleteConfirm.current.showModal()}>
+                        <button onClick={() => deleteConfirm.current.showModal()}>
                             <FormattedMessage id="button.delete" />
-                        </a>
-                    </span>
-                </h2>
+                        </button>
+                    </div>
+                </div>
 
                 <p>{category.description}</p>
             </>)}

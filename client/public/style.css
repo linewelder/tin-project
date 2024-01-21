@@ -23,8 +23,10 @@ h2, h3 {
     color: #333;
 }
 
-.title-controls {
-    font-size: 1rem;
+.header-with-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .right-aligned {
