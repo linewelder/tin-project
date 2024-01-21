@@ -1,4 +1,4 @@
-import { FormattedMessage } from "react-intl";
+import { FormattedDate, FormattedMessage } from "react-intl";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { useApiFetch } from "../apiContext.jsx";
@@ -88,7 +88,9 @@ export default function CategoryDetails() {
                                     <Link to={`/tournaments/${tournament.id}`}>
                                         {tournament.name}
                                     </Link></td>
-                                <td>{tournament.date}</td>
+                                <td>
+                                    <FormattedDate value={tournament.date} />
+                                </td>
                             </tr>
                         ))}
                     </tbody>
