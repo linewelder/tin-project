@@ -37,6 +37,10 @@ export default function TournamentCreate() {
         setParticipants([...addedParticipants, participant]);
     };
 
+    const removeParticipant = (participant) => {
+        setParticipants(addedParticipants.filter(x => x.id !== participant.id));
+    };
+
     const onSubmit = async (e) => {
         e.preventDefault();
 
@@ -160,6 +164,7 @@ export default function TournamentCreate() {
                             <th><FormattedMessage id="table.participant.id" /></th>
                             <th><FormattedMessage id="table.participant.first-name" /></th>
                             <th><FormattedMessage id="table.participant.last-name" /></th>
+                            <th><FormattedMessage id="table.actions" /></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -168,6 +173,11 @@ export default function TournamentCreate() {
                                 <td>{participant.id}</td>
                                 <td>{participant.firstName}</td>
                                 <td>{participant.lastName}</td>
+                                <td>
+                                    <button onClick={() => removeParticipant(participant)}>
+                                        <FormattedMessage id="button.delete" />
+                                    </button>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
