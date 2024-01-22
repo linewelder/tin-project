@@ -67,7 +67,7 @@ export default function CategoryDetails() {
                                     <Link to={`/tournaments/${tournament.id}`}>
                                         {tournament.name}
                                     </Link></td>
-                                <td>{tournament.date}</td>
+                                <td><FormattedDate value={tournament.date} /></td>
                             </tr>
                         ))}
                     </tbody>
