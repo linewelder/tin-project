@@ -124,7 +124,6 @@ export async function addNew(req, res) {
     data.id = result.insertId;
 
     const participantData = data.participants.map(x => [x, data.id]);
-    console.log(participantData);
     await db.query(
         "INSERT INTO TournamentParticipant(IdParticipant, IdTournament) VALUES ?",
         [participantData]);
