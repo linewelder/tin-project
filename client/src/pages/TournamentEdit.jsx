@@ -125,6 +125,12 @@ export default function TournamentEdit() {
     const [addingParticipants, setAddingParticipants] = useState(false);
     const closeConfirm = useRef();
 
+    const closeTournament = async (e) => {
+        setInputs({ ...inputs, isClosed: true });
+        closeConfirm.current.close();
+        onSubmit(e);
+    };
+
     return (
         <>
             {tournament && (<>
@@ -138,10 +144,10 @@ export default function TournamentEdit() {
                 <dialog ref={closeConfirm}>
                     <h2><FormattedMessage
                             id="page.tournaments.edit.close-confirm"
-                            values={{ name: tournament.name}} /></h2>
-                    <p><FormattedMessage id="page.tournaments.edit.close-confirm" /></p>
+                            values={{ name: tournament.name }} /></h2>
+                    <p><FormattedMessage id="page.tournaments.edit.close-desc" /></p>
 
-                    <button onClick={() => closeConfirm.current.close()}>
+                    <button onClick={closeTournament} className="destructive-btn">
                         <FormattedMessage id="button.close-tournament" />
                     </button>
                     <a href="#" onClick={() => closeConfirm.current.close()}>
