@@ -1,8 +1,8 @@
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Validator from "../Validator";
-import { ApiContext } from "../apiContext";
+import { ApiContext, useApiFetch } from "../apiContext";
 
 export default function TournamentCreate() {
     const [inputs, setInputs] = useState({
@@ -12,6 +12,10 @@ export default function TournamentCreate() {
         idCategory: 1,
     });
     const [errors, setErrors] = useState([]);
+
+    const [ioError, setIoError] = useState(null);
+    useEffect(() => { if (ioError) throw ioError; }, [ioError]);
+    const categories = useApiFetch("/categories", [], setIoError);
 
     const onInputsChanged = (e) => {
         setInputs({
@@ -121,9 +125,11 @@ export default function TournamentCreate() {
                 <select id="category" name="idCategory"
                     value={inputs.idCategory} onChange={onInputsChanged}
                 >
-                    <option value={1}>3x3x3</option>
-                    <option value={2}>4x4x4</option>
-                    <option value={3}>Skewb</option>
+                    {categories.map(category => (
+                        <option key={category.id} value={category.id}>
+                            {category.name}
+                        </option>
+                    ))}
                 </select>
                 <br />
             </form>
