@@ -99,6 +99,8 @@ const newTournamentSchema = joi.object({
     idCategory: joi.number()
         .min(1)
         .required(),
+    participants: joi.array()
+        .items(joi.number().min(1))
 });
 
 export async function addNew(req, res) {
@@ -107,6 +109,7 @@ export async function addNew(req, res) {
         date: req.body.date,
         address: req.body.address,
         idCategory: req.body.idCategory,
+        participants: req.body.participants,
     };
     if (!tryValidate(res, data, newTournamentSchema)) {
         return;
@@ -118,7 +121,13 @@ export async function addNew(req, res) {
     const result = await db.query(
         "INSERT INTO Tournament(Name, Date, Address, IdCategory, Organizer, IsClosed) VALUES (?)",
         [[data.name, data.date, data.address, data.idCategory, data.organizer, data.isClosed]]);
-
     data.id = result.insertId;
+
+    const participantData = data.participants.map(x => [x, data.id]);
+    console.log(participantData);
+    await db.query(
+        "INSERT INTO TournamentParticipant(IdParticipant, IdTournament) VALUES ?",
+        [participantData]);
+
     res.json(data);
 }

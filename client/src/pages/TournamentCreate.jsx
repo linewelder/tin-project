@@ -55,7 +55,10 @@ export default function TournamentCreate() {
             return;
         }
 
-        const [result, error] = await api.post("/tournaments", inputs);
+        const [result, error] = await api.post("/tournaments", {
+            ...inputs,
+            participants: addedParticipants.map(x => x.id),
+        });
         if (result) {
             navigate("/");
         } else {
