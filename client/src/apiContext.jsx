@@ -47,6 +47,14 @@ export function ApiContextProvider({ children }) {
         return await request("post", path, body);
     };
 
+    const put = async (path, body) => {
+        return await request("put", path, body);
+    };
+
+    const delete_ = async (path) => {
+        return await request("delete", path, undefined);
+    };
+
     const register = async (credentials) => {
         const [result, error] = await post("/auth/register", credentials);
         if (error) return [null, error];
@@ -68,7 +76,7 @@ export function ApiContextProvider({ children }) {
     };
 
     return (
-        <ApiContext.Provider value={{ currentUser, get, post, register, login, logout }}>
+        <ApiContext.Provider value={{ currentUser, get, post, put, delete: delete_, register, login, logout }}>
             {children}
         </ApiContext.Provider>
     );
