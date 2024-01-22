@@ -15,7 +15,7 @@ app.use("/api/categories", categoriesRouter);
 app.use("/api/tournaments", tournamentsRouter);
 app.use("/api/participants", participantsRouter);
 app.use("/api/users", usersRouter);
-app.use("*", (_, res) => { res.status(404).json({ "error": "Path not found" }); });
+app.use("*", (_, res) => { res.status(404).json({ "error": "path-not-found" }); });
 
 const port = 8800;
 app.listen(port, () => {

@@ -31,7 +31,7 @@ export function ApiContextProvider({ children }) {
                 return [null, new Error(false, error.message)];
             }
 
-            if (!error.response.data.formattable) {
+            if (error.response.data.formattable === false) {
                 return [null, new Error(false, error.response.data.error)];
             }
 

@@ -12,6 +12,7 @@
     "error.wrong-login-data": "Wrong username or password",
     "error.not-authenticated": "Login required",
     "error.not-found": "Not found",
+    "error.path-not-found": "API path not found",
     "error.email.empty": "Email is required",
     "error.firstName.empty": "First name is required",
     "error.lastName.empty": "Last name is required",
