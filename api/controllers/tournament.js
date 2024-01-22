@@ -1,5 +1,6 @@
 import db from "../db.js";
-import { getPaginationParams } from "../validation.js";
+import { getPaginationParams, tryValidate } from "../validation.js";
+import joi from "joi";
 
 export async function getAll(req, res) {
     const [first, count] = getPaginationParams(req);
@@ -84,4 +85,40 @@ export async function getParticipants(req, res) {
         result: row.Time,
     }));
     res.json({ totalCount, elements });
+}
+
+const newTournamentSchema = joi.object({
+    name: joi.string()
+        .max(50)
+        .required(),
+    date: joi.string()
+        .isoDate(),
+    address: joi.string()
+        .max(150)
+        .required(),
+    idCategory: joi.number()
+        .min(1)
+        .required(),
+});
+
+export async function addNew(req, res) {
+    const data = {
+        name: req.body.name,
+        date: req.body.date,
+        address: req.body.address,
+        idCategory: req.body.idCategory,
+    };
+    if (!tryValidate(res, data, newTournamentSchema)) {
+        return;
+    }
+
+    data.organizer = req.claims.id;
+    data.isClosed = false;
+
+    const result = await db.query(
+        "INSERT INTO Tournament(Name, Date, Address, IdCategory, Organizer, IsClosed) VALUES (?)",
+        [[data.name, data.date, data.address, data.idCategory, data.organizer, data.isClosed]]);
+
+    data.id = result.insertId;
+    res.json(data);
 }
