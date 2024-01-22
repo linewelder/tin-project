@@ -2,7 +2,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 import { useContext, useEffect, useRef, useState } from "react";
 import Validator from "../Validator";
-import { ApiContext, useApiFetch } from "../apiContext";
+import { ApiContext, useApiFetch, usePagination } from "../apiContext";
+import Pagination from "../components/Pagination";
 
 export default function TournamentCreate() {
     const [inputs, setInputs] = useState({
@@ -16,6 +17,8 @@ export default function TournamentCreate() {
     const [ioError, setIoError] = useState(null);
     useEffect(() => { if (ioError) throw ioError; }, [ioError]);
     const categories = useApiFetch("/categories", [], setIoError);
+    const participants = usePagination("/participants", 3, setIoError);
+    const [addedParticipants, setParticipants] = useState([]);
 
     const onInputsChanged = (e) => {
         setInputs({
@@ -26,6 +29,13 @@ export default function TournamentCreate() {
 
     const intl = useIntl();
     const api = useContext(ApiContext);
+
+    const isAdded = (participant) =>
+        addedParticipants.findIndex(x => x.id == participant.id) >= 0;
+
+    const addParticipant = (participant) => {
+        setParticipants([...addedParticipants, participant]);
+    };
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -50,47 +60,44 @@ export default function TournamentCreate() {
         }
     }
 
-    const addParticipant = useRef(null);
+    const addParticipantDialog = useRef(null);
 
     return (
         <>
-            <dialog ref={addParticipant}>
+            <dialog ref={addParticipantDialog}>
                 <h2><FormattedMessage id="page.tournaments.create.add-participant" /></h2>
-                <div className="Pagination">
-                    <button>&lt;&lt;</button>
-                    Page 1 out of 10
-                    <button>&gt;&gt;</button>
-                </div>
-
+                <Pagination pagination={participants} />
                 <table>
                     <thead>
                         <tr>
                             <th><FormattedMessage id="table.participant.id" /></th>
                             <th><FormattedMessage id="table.participant.first-name" /></th>
                             <th><FormattedMessage id="table.participant.last-name" /></th>
+                            <th><FormattedMessage id="table.actions" /></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>John</td>
-                            <td>Doe</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Jane</td>
-                            <td>Smith</td>
-                        </tr>
+                        {participants.elements.map(participant => (
+                            <tr key={participant.id}>
+                                <td>{participant.id}</td>
+                                <td>{participant.firstName}</td>
+                                <td>{participant.lastName}</td>
+                                <td>
+                                    {!isAdded(participant) &&
+                                        <button onClick={() => addParticipant(participant)}>
+                                            <FormattedMessage id="button.add" />
+                                        </button>
+                                    }
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
                 <br />
 
-                <button onClick={() => addParticipant.current.close()}>
-                    <FormattedMessage id="button.add" />
+                <button onClick={() => addParticipantDialog.current.close()}>
+                    <FormattedMessage id="button.close" />
                 </button>
-                <a href="#" onClick={() => addParticipant.current.close()}>
-                    <FormattedMessage id="button.cancel" />
-                </a>
             </dialog>
 
             <div className="header-with-buttons">
@@ -142,40 +149,30 @@ export default function TournamentCreate() {
 
             <h3><FormattedMessage id="page.tournaments.details.participants" /></h3>
 
-            <button onClick={() => addParticipant.current.showModal()}>
+            <button onClick={() => addParticipantDialog.current.showModal()}>
                 <FormattedMessage id="page.tournaments.create.add-participant" />
             </button>
 
-            <div className="Pagination">
-                <button>&lt;&lt;</button>
-                Page 1 out of 1
-                <button>&gt;&gt;</button>
-            </div>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th><FormattedMessage id="table.participant.id" /></th>
-                        <th><FormattedMessage id="table.participant.first-name" /></th>
-                        <th><FormattedMessage id="table.participant.last-name" /></th>
-                        <th><FormattedMessage id="table.actions" /></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>John</td>
-                        <td>Doe</td>
-                        <td><a href="#"><FormattedMessage id="button.delete" /></a></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Jane</td>
-                        <td>Smith</td>
-                        <td><a href="#"><FormattedMessage id="button.delete" /></a></td>
-                    </tr>
-                </tbody>
-            </table>
+            {addedParticipants.length > 0 &&
+                <table>
+                    <thead>
+                        <tr>
+                            <th><FormattedMessage id="table.participant.id" /></th>
+                            <th><FormattedMessage id="table.participant.first-name" /></th>
+                            <th><FormattedMessage id="table.participant.last-name" /></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {addedParticipants.map(participant => (
+                            <tr key={participant.id}>
+                                <td>{participant.id}</td>
+                                <td>{participant.firstName}</td>
+                                <td>{participant.lastName}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            }
         </>
     );
 }
