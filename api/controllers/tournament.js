@@ -20,7 +20,7 @@ export async function getAll(req, res) {
         name: row.Name,
         date: row.date,
         category: row.CategoryName,
-        isClosed: row.IsClosed,
+        isClosed: row.IsClosed !== 0,
     }));
     return res.json({ totalCount, elements });
 };
@@ -31,8 +31,8 @@ export async function getOne(req, res) {
 
     const rows = await db.query(
         "SELECT IdTournament, Tournament.Name AS Name, Date, Address," +
-        "       Category.Name AS CategoryName, IsClosed," +
-        "       Organizer, FirstName, LastName " +
+        "       Category.Name AS CategoryName, Tournament.IdCategory, " +
+        "       IsClosed, Organizer, FirstName, LastName " +
         "FROM Tournament " +
         "JOIN Category ON Category.IdCategory = Tournament.IdCategory " +
         "JOIN User ON IdUser = Organizer " +
@@ -46,15 +46,18 @@ export async function getOne(req, res) {
     const tournament = {
         id: rows[0].IdTournament,
         name: rows[0].Name,
-        date: rows[0].Date,
+        date: rows[0].Date.toISOString().split('T')[0],
         address: rows[0].Address,
-        category: rows[0].CategoryName,
+        category: {
+            id: rows[0].IdCategory,
+            name: rows[0].CategoryName,
+        },
         organizer: {
             id: rows[0].Organizer,
             firstName: rows[0].FirstName,
             lastName: rows[0].LastName,
         },
-        isClosed: rows[0].IsClosed,
+        isClosed: rows[0].IsClosed !== 0,
     };
     res.json(tournament);
 }

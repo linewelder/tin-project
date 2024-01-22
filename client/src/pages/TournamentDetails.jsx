@@ -60,7 +60,7 @@ export default function TournamentDetails() {
                     <dt><FormattedMessage id="label.address" /></dt>
                     <dd>{tournament.address}</dd>
                     <dt><FormattedMessage id="label.category" /></dt>
-                    <dd>{tournament.category}</dd>
+                    <dd>{tournament.category.name}</dd>
                     <dt><FormattedMessage id="label.created-by" /></dt>
                     <dd>{tournament.organizer.firstName} {tournament.organizer.lastName}</dd>
                     <dt><FormattedMessage id="label.id" /></dt>
