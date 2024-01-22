@@ -8,7 +8,6 @@ import Validator from "../Validator.js";
 export default function TournamentEdit() {
     const api = useContext(ApiContext);
     const navigate = useNavigate();
-    if (!api.currentUser) navigate("/");
 
     const { id } = useParams();
 
@@ -42,9 +41,9 @@ export default function TournamentEdit() {
         });
         
         const canEdit = !tournament.isClosed && (
-            api.currentUser.id === tournament.organizer.id ||
-            api.currentUser.admin);
-        if (!canEdit) navigate("/");
+            api.currentUser?.id === tournament.organizer.id ||
+            api.currentUser?.admin);
+        if (!canEdit) navigate(`/tournaments/${id}`);
     }, [tournament]);
 
     const participantData = useApiFetch(path + "/participants", [], setIoError);

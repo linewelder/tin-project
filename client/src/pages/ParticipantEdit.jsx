@@ -11,6 +11,10 @@ export default function ParticipantEdit() {
 
     const { id } = useParams();
 
+    useEffect(() => {
+        if (!api.currentUser?.admin) navigate(`/participants/${id}`);
+    }, []);
+
     const [ioError, setIoError] = useState(null);
     useEffect(() => { if (ioError) throw ioError; }, [ioError]);
 

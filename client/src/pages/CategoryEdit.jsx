@@ -7,9 +7,12 @@ import Validator from "../Validator.js";
 export default function CategoryEdit() {
     const api = useContext(ApiContext);
     const navigate = useNavigate();
-    if (!api.currentUser?.admin) navigate("/categories");
 
     const { id } = useParams();
+
+    useEffect(() => {
+        if (!api.currentUser?.admin) navigate(`/categories/${id}`);
+    }, []);
 
     const [ioError, setIoError] = useState(null);
     useEffect(() => { if (ioError) throw ioError; }, [ioError]);

@@ -1,6 +1,6 @@
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link, useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Validator from "../Validator";
 import { ApiContext } from "../apiContext";
 
@@ -22,7 +22,9 @@ export default function ParticipantCreate() {
     const api = useContext(ApiContext);
     const navigate = useNavigate();
 
-    if (!api.currentUser?.admin) navigate("/participants");
+    useEffect(() => {
+        if (!api.currentUser?.admin) navigate("/participants");
+    }, []);
 
     const onSubmit = async (e) => {
         e.preventDefault();
