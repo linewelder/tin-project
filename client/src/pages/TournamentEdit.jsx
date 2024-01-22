@@ -93,7 +93,7 @@ export default function TournamentEdit() {
     }
 
     const isAdded = (participant) =>
-    participants.findIndex(x => x.id == participant.id) >= 0;
+        participants.findIndex(x => x.id == participant.id) >= 0;
 
     const addParticipant = (participant) => {
         setParticipants([...participants, {
