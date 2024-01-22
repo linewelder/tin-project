@@ -52,6 +52,24 @@ export default function ParticipantDetails() {
                     <dt><FormattedMessage id="label.id" /></dt>
                     <dd>{participant.id}</dd>
                 </dl>
+
+                <h3><FormattedMessage id="page.participants.details.records" /></h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th><FormattedMessage id="table.result.category" /></th>
+                            <th><FormattedMessage id="table.result.result" /></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {participant.records.map(record => (
+                            <tr key={record.idCategory}>
+                                <td>{record.category}</td>
+                                <td>{record.result}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </>)}
         </>
     );
