@@ -1,7 +1,7 @@
 import { FormattedDate, FormattedMessage } from "react-intl";
 import { Link, useParams } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
-import { useApiFetch, usePagination } from "../apiContext.jsx";
+import { useContext, useEffect, useRef, useState } from "react";
+import { ApiContext, useApiFetch, usePagination } from "../apiContext.jsx";
 import Pagination from "../components/Pagination.jsx";
 
 export default function CategoryDetails() {
@@ -9,6 +9,9 @@ export default function CategoryDetails() {
 
     const [error, setError] = useState(null);
     useEffect(() => { if (error) throw error; }, [error]);
+
+    const api = useContext(ApiContext);
+    const canEdit = api.currentUser?.admin || false;
 
     const path = `/categories/${id}`;
     const category = useApiFetch(path, null, setError);
@@ -38,14 +41,14 @@ export default function CategoryDetails() {
 
                 <div className="header-with-buttons">
                     <h2>{category.name}</h2>
-                    <div>
+                    {canEdit && <div>
                         <Link to="edit" className="button-link">
                             <FormattedMessage id="button.edit" />
                         </Link>
                         <button onClick={() => deleteConfirm.current.showModal()}>
                             <FormattedMessage id="button.delete" />
                         </button>
-                    </div>
+                    </div>}
                 </div>
 
                 <p>{category.description}</p>
