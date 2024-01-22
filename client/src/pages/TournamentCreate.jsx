@@ -1,5 +1,5 @@
 import { FormattedMessage, useIntl } from "react-intl";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useRef, useState } from "react";
 import Validator from "../Validator";
 import { ApiContext, useApiFetch, usePagination } from "../apiContext";
@@ -29,6 +29,7 @@ export default function TournamentCreate() {
 
     const intl = useIntl();
     const api = useContext(ApiContext);
+    const navigate = useNavigate();
 
     const isAdded = (participant) =>
         addedParticipants.findIndex(x => x.id == participant.id) >= 0;
