@@ -187,7 +187,7 @@ export async function update(req, res) {
     }
 
     const canEdit =
-        rows[0].Organizer === req.claims.id ||
+        rows[0].Organizer === req.claims.id && rows[0].IsClosed === 0 ||
         req.claims.admin;
     if (!canEdit) {
         return req.status(403).json({ error: "access-denied" });
