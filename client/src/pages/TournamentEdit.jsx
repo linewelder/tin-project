@@ -79,7 +79,10 @@ export default function TournamentEdit() {
 
         const [result, error] = await api.put(`/tournaments/${id}`, {
             ...inputs,
-            participants: participants.map(x => x.id),
+            participants: participants.map(x => ({
+                id: x.id,
+                result: x.result || undefined,
+            })),
         });
         if (result) {
             navigate(`/tournaments/${id}`);
@@ -93,7 +96,12 @@ export default function TournamentEdit() {
     participants.findIndex(x => x.id == participant.id) >= 0;
 
     const addParticipant = (participant) => {
-        setParticipants([...participants, participant]);
+        setParticipants([...participants, {
+            id: participant.id,
+            firstName: participant.firstName,
+            lastName: participant.lastName,
+            result: null,
+        }]);
     };
 
     const removeParticipant = (participant) => {

@@ -141,7 +141,15 @@ const updateTournamentSchema = joi.object({
         .min(1)
         .required(),
     isClosed: joi.bool()
-        .required()
+        .required(),
+    participants: joi.array()
+        .items(joi.object({
+            id: joi.number()
+                .min(1)
+                .required(),
+            result: joi.number()
+                .min(0),
+        })),
 });
 
 export async function update(req, res) {
@@ -168,6 +176,7 @@ export async function update(req, res) {
         address: req.body.address,
         idCategory: req.body.idCategory,
         isClosed: req.body.isClosed,
+        participants: req.body.participants,
     };
     if (!tryValidate(res, data, updateTournamentSchema)) {
         return;
@@ -180,5 +189,16 @@ export async function update(req, res) {
         [data.name, data.date, data.address, data.idCategory, data.isClosed, id]);
     data.id = id;
 
-    res.json(data);
+    await db.query(
+        "DELETE FROM TournamentParticipant WHERE IdTournament = ?",
+        [id]);
+
+    if (data.participants.length > 0) {
+        const values = data.participants.map(x => [x.id, id, x.result]);
+        await db.query(
+            "INSERT INTO TournamentParticipant(IdParticipant, IdTournament, Time) " +
+            "VALUES ?",
+            [values]);
+    }
+    res.json({});
 }
