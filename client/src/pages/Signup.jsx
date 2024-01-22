@@ -31,9 +31,13 @@ function Signup() {
 
         const validator = new Validator(intl, inputs);
         validator.notEmpty("email");
+        validator.maxLength("email", 75);
         validator.notEmpty("firstName");
+        validator.maxLength("firstName", 30);
         validator.notEmpty("lastName");
+        validator.maxLength("lastName", 30);
         validator.notEmpty("password");
+        validator.maxLength("password", 32);
         validator.validate("passwordAgain",
             x => x === inputs.password,
             "error.password.doesnt-match");

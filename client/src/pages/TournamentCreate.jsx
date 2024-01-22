@@ -47,8 +47,10 @@ export default function TournamentCreate() {
 
         const validator = new Validator(intl, inputs);
         validator.notEmpty("name");
+        validator.maxLength("name", 50)
         validator.notEmpty("date");
         validator.notEmpty("address");
+        validator.maxLength("address", 150);
 
         const errors = validator.getErrors();
         if (errors.length > 0) {

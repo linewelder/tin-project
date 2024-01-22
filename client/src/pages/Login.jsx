@@ -27,7 +27,9 @@ function Login() {
 
         const validator = new Validator(intl, inputs);
         validator.notEmpty("email");
+        validator.maxLength("email", 75);
         validator.notEmpty("password");
+        validator.maxLength("password", 32);
 
         const errors = validator.getErrors();
         if (errors.length > 0) {
