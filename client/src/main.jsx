@@ -23,6 +23,7 @@ import ParticipantDetails from './pages/ParticipantDetails.jsx';
 import ParticipantEdit from './pages/ParticipantEdit.jsx';
 
 import English from '../lang/en.json';
+import Polish from '../lang/pl.json';
 const locale = navigator.language;
 
 const Layout = () => (
