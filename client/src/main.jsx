@@ -20,6 +20,7 @@ import TournamentEdit from './pages/TournamentEdit.jsx';
 import Participants from './pages/Participants.jsx';
 import ParticipantCreate from './pages/ParticipantCreate.jsx';
 import ParticipantDetails from './pages/ParticipantDetails.jsx';
+import ParticipantEdit from './pages/ParticipantEdit.jsx';
 
 import English from '../lang/en.json';
 const locale = navigator.language;
@@ -84,6 +85,10 @@ const router = createBrowserRouter([
             {
                 path: "/participants/create",
                 element: <ParticipantCreate />,
+            },
+            {
+                path: "/participants/:id/edit",
+                element: <ParticipantEdit />,
             },
             {
                 path: "/tournaments",

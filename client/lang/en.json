@@ -62,6 +62,7 @@
     "page.participants.details.delete-confirm": "Are you sure you want to delete {firstName} {lastName}?",
     "page.participants.details.records": "Personal Records",
     "page.participants.create.title": "Add Participant",
+    "page.participants.edit.title": "Edit {firstName} {lastName}",
     "page.tournaments.title": "Tournaments",
     "page.tournaments.all": "All Tournaments",
     "page.tournaments.users": "Your Tournaments",
