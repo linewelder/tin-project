@@ -19,6 +19,9 @@ function Header() {
                     <NavLink to="/categories">
                         <FormattedMessage id="page.categories.title" />
                     </NavLink>
+                    <NavLink to="/tournaments">
+                        <FormattedMessage id="page.tournaments.title" />
+                    </NavLink>
                 </div>
                 <div>
                     {api.currentUser ? (
