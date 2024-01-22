@@ -63,29 +63,20 @@ export async function getParticipants(req, res) {
     const id = req.params.id;
     if (id < 1) return res.status(404).json({ "error": "not-found" });
 
-    const [first, count] = getPaginationParams(req);
-
-    const totalCount = (await db.query(
-        "SELECT Count(1) AS TotalCount " +
-        "FROM TournamentParticipant " +
-        "WHERE IdTournament = ?",
-        [id]))[0].TotalCount;
-
     const rows = await db.query(
         "SELECT Participant.IdParticipant, FirstName, LastName, Time " +
         "FROM TournamentParticipant " +
         "JOIN Participant ON Participant.IdParticipant = TournamentParticipant.IdParticipant " +
-        "WHERE IdTournament = ? " +
-        "LIMIT ? OFFSET ?",
-        [id, count, first]);
+        "WHERE IdTournament = ? ",
+        [id]);
 
-    const elements = rows.map(row => ({
+    const participants = rows.map(row => ({
         id: row.IdParticipant,
         firstName: row.FirstName,
         lastName: row.LastName,
         result: row.Time,
     }));
-    res.json({ totalCount, elements });
+    res.json(participants);
 }
 
 const newTournamentSchema = joi.object({
