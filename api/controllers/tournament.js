@@ -122,3 +122,58 @@ export async function addNew(req, res) {
 
     res.json(data);
 }
+
+const updateTournamentSchema = joi.object({
+    name: joi.string()
+        .max(50)
+        .required(),
+    date: joi.string()
+        .isoDate(),
+    address: joi.string()
+        .max(150)
+        .required(),
+    idCategory: joi.number()
+        .min(1)
+        .required(),
+    isClosed: joi.bool()
+        .required()
+});
+
+export async function update(req, res) {
+    const id = req.params.id;
+    if (id < 1) return res.status(404).json({ error: "not-found" });
+
+    const rows = await db.query(
+        "SELECT Organizer FROM Tournament WHERE IdTournament = ?",
+        [id]);
+    if (rows.length < 1) {
+        return res.status(404).json({ "error": "not-found" });
+    }
+
+    const canEdit =
+        rows[0].Organizer === req.claims.id ||
+        req.claims.admin;
+    if (!canEdit) {
+        return req.status(403).json({ error: "access-denied" });
+    }
+
+    const data = {
+        id,
+        name: req.body.name,
+        date: req.body.date,
+        address: req.body.address,
+        idCategory: req.body.idCategory,
+        isClosed: req.body.isClosed,
+    };
+    if (!tryValidate(res, data, updateTournamentSchema)) {
+        return;
+    }
+
+    await db.query(
+        "UPDATE Tournament " +
+        "SET Name=?, Date=?, Address=?, IdCategory=?, IsClosed=? " +
+        "WHERE IdTournament = ?",
+        [[data.name, data.date, data.address, data.idCategory, data.isClosed, id]]);
+
+    res.json(data);
+}
