@@ -17,8 +17,8 @@ export default function TournamentCreate() {
     const [ioError, setIoError] = useState(null);
     useEffect(() => { if (ioError) throw ioError; }, [ioError]);
     const categories = useApiFetch("/categories", [], setIoError);
-    const participants = usePagination("/participants", 3, setIoError);
-    const [addedParticipants, setParticipants] = useState([]);
+    const allParticipants = usePagination("/participants", 3, setIoError);
+    const [participants, setParticipants] = useState([]);
 
     const onInputsChanged = (e) => {
         setInputs({
@@ -34,14 +34,14 @@ export default function TournamentCreate() {
     if (!api.currentUser) navigate("/");
 
     const isAdded = (participant) =>
-        addedParticipants.findIndex(x => x.id == participant.id) >= 0;
+        participants.findIndex(x => x.id == participant.id) >= 0;
 
     const addParticipant = (participant) => {
-        setParticipants([...addedParticipants, participant]);
+        setParticipants([...participants, participant]);
     };
 
     const removeParticipant = (participant) => {
-        setParticipants(addedParticipants.filter(x => x.id !== participant.id));
+        setParticipants(participants.filter(x => x.id !== participant.id));
     };
 
     const onSubmit = async (e) => {
@@ -62,7 +62,7 @@ export default function TournamentCreate() {
 
         const [result, error] = await api.post("/tournaments", {
             ...inputs,
-            participants: addedParticipants.map(x => x.id),
+            participants: participants.map(x => x.id),
         });
         if (result) {
             navigate("/");
@@ -77,7 +77,7 @@ export default function TournamentCreate() {
     return (
         <>
             <AddParticipantDialog
-                pagination={participants}
+                pagination={allParticipants}
                 onAdd={addParticipant}
                 isAdded={isAdded}
                 open={addingParticipants}
@@ -136,7 +136,7 @@ export default function TournamentCreate() {
                 <FormattedMessage id="page.tournaments.create.add-participant" />
             </button>
 
-            {addedParticipants.length > 0 &&
+            {participants.length > 0 &&
                 <table>
                     <thead>
                         <tr>
@@ -147,7 +147,7 @@ export default function TournamentCreate() {
                         </tr>
                     </thead>
                     <tbody>
-                        {addedParticipants.map(participant => (
+                        {participants.map(participant => (
                             <tr key={participant.id}>
                                 <td>{participant.id}</td>
                                 <td>{participant.firstName}</td>
