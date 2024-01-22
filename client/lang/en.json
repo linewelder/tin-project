@@ -29,6 +29,7 @@
     "table.participant.last-name": "Last Name",
     "table.participant.date": "Date",
     "table.participant.result": "Result",
+    "table.participant.no-result": "no result",
     "table.category.id": "ID",
     "table.category.name": "Name",
     "table.result.category": "Category",

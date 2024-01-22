@@ -77,7 +77,7 @@ export default function TournamentDetails() {
                                 <td>{participant.id}</td>
                                 <td>{participant.firstName}</td>
                                 <td>{participant.lastName}</td>
-                                <td>{participant.result}</td>
+                                <td>{participant.result ?? <FormattedMessage id="table.participant.no-result" />}</td>
                             </tr>
                         ))}
                     </tbody>
