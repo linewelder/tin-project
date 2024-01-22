@@ -1,7 +1,7 @@
 import { FormattedDate, FormattedMessage } from "react-intl";
 import { Link, useParams } from "react-router-dom";
-import { useContext, useEffect, useRef, useState } from "react";
-import { ApiContext, useApiFetch } from "../apiContext.jsx";
+import { useEffect, useRef, useState } from "react";
+import { useApiFetch, usePaginatedFetch } from "../apiContext.jsx";
 import Pagination from "../components/Pagination.jsx";
 
 export default function CategoryDetails() {
@@ -13,24 +13,9 @@ export default function CategoryDetails() {
     const path = `/categories/${id}`;
     const category = useApiFetch(path, null, setError);
     const currentTournaments = useApiFetch(path + "/current-tournaments", [], setError);
+    const [tournamentHistory, loadTournamentHistory] =
+        usePaginatedFetch(path + "/tournament-history", 3, setError);
     const bestParticipants = useApiFetch(path + "/best-participants", [], setError);
-
-    const api = useContext(ApiContext);
-
-    const [tournamentHistory, setTournamentHistory] = useState({ totalCount: 0 });
-    const getTournamentHistory = async (first, count) => {
-        const [data, error] = await api.get(
-            `${path}/tournament-history?first=${first}&count=${count}`);
-        console.log(data);
-        if (error) {
-            setError(error);
-            return;
-        }
-
-        setTournamentHistory(data);
-        return data;
-    };
-    useEffect(() => { getTournamentHistory(0, 3); }, []);
 
     const deleteConfirm = useRef(null);
 
@@ -95,7 +80,7 @@ export default function CategoryDetails() {
                 <Pagination
                     pageSize={3}
                     totalCount={tournamentHistory.totalCount}
-                    onPageChanged={getTournamentHistory} />
+                    onPageChanged={loadTournamentHistory} />
                 <table>
                     <thead>
                         <tr>
