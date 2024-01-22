@@ -100,3 +100,16 @@ export async function addNew(req, res) {
 
     res.json(data);
 }
+
+export async function deleteOne(req, res) {
+    const id = req.params.id;
+    if (id < 1) return res.status(404).json({ "error": "not-found" });
+
+    const rows = await db.query("DELETE FROM Category WHERE IdCategory = ?", [id]);
+    if (rows.rowCount === 0) {
+        res.status(404).json({ "error": "not-found" });
+        return;
+    }
+
+    res.status(204).end();
+};

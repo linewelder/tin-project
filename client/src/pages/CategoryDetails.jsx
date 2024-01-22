@@ -1,5 +1,5 @@
 import { FormattedDate, FormattedMessage } from "react-intl";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect, useRef, useState } from "react";
 import { ApiContext, useApiFetch, usePagination } from "../apiContext.jsx";
 import Pagination from "../components/Pagination.jsx";
@@ -21,6 +21,13 @@ export default function CategoryDetails() {
 
     const deleteConfirm = useRef(null);
 
+    const navigate = useNavigate();
+    const deleteCategory = async () => {
+        const [_, error] = await api.delete(path);
+        if (error) setError(error);
+        else navigate("/categories");
+    };
+
     return (
         <>
             {category && (<>
@@ -31,7 +38,7 @@ export default function CategoryDetails() {
                             values={{ name: category.name }} />
                     </h2>
 
-                    <button className="destructive-btn" onClick={() => deleteConfirm.current.close()}>
+                    <button className="destructive-btn" onClick={deleteCategory}>
                         <FormattedMessage id="button.delete" />
                     </button>
                     <a href="#" onClick={() => deleteConfirm.current.close()}>
