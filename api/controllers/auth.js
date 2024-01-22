@@ -1,6 +1,7 @@
 import db from "../db.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import joi from "joi";
 
 function createAuthToken(user) {
     const claims = {
@@ -12,21 +13,52 @@ function createAuthToken(user) {
     return jwt.sign(claims, "mysecret");
 }
 
+const userSchema = joi.object({
+    email: joi.string()
+        .max(75)
+        .required(),
+    firstName: joi.string()
+        .max(30)
+        .required(),
+    lastName: joi.string()
+        .max(30)
+        .required(),
+    password: joi.string()
+        .max(32)
+        .required(),
+}); 
+
 export async function register(req, res) {
-    const existingUser = await db.query("SELECT * FROM User WHERE Email = ?", [req.body.email]);
+    const data = {
+        email: req.body.email,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        password: req.body.password,
+    };
+
+    const { error } = userSchema.validate(data);
+    if (error) {
+        res.status(400).json({
+            error: error.details[0].message,
+            formattable: false,
+        });
+        return;
+    }
+
+    const existingUser = await db.query("SELECT * FROM User WHERE Email = ?", [data.email]);
     if (existingUser.length > 0) {
         return res.status(409)
             .json({ error: "email-exists" });
     }
 
     const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(req.body.password, salt);
+    const hash = await bcrypt.hash(data.password, salt);
 
     const newUser = {
-        email: req.body.email,
+        email: data.email,
         password: hash,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
+        firstName: data.firstName,
+        lastName: data.lastName,
         admin: false
     };
 
