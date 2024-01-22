@@ -1,3 +1,4 @@
+import joi from "joi";
 import db from "../db.js";
 import { toCategory, toTournament } from "../models.js";
 import { getPaginationParams } from "../validation.js";
@@ -72,4 +73,30 @@ export async function getBestParticipants(req, res) {
         date: row.Date,
         result: row.Time,
     })));
+}
+
+const newCategorySchema = joi.object({
+    name: joi.string()
+        .max(20)
+        .required(),
+    description: joi.string()
+        .max(200)
+        .required(),
+});
+
+export async function addNew(req, res) {
+    const data = {
+        name: req.body.name,
+        description: req.body.description,
+    };
+    if (!tryValidate(res, data, newCategorySchema)) {
+        return;
+    }
+
+    const result = await db.query(
+        "INSERT INTO Category(Name, Description) VALUES (?)",
+        [[data.name, data.description]]);
+    data.id = result.insertId;
+
+    res.json(data);
 }
