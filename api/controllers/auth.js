@@ -6,6 +6,7 @@ import { tryValidate } from "../validation.js";
 
 function createAuthToken(user) {
     const claims = {
+        id: user.id,
         firstName: user.firstName,
         lastName: user.lastName,
         admin: user.admin
