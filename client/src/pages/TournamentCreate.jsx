@@ -1,13 +1,50 @@
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { Link } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
+import Validator from "../Validator";
+import { ApiContext } from "../apiContext";
 
 export default function TournamentCreate() {
     const [inputs, setInputs] = useState({
-        email: "",
-        password: ""
+        name: "",
+        date: "",
+        address: "",
+        idCategory: 1,
     });
     const [errors, setErrors] = useState([]);
+
+    const onInputsChanged = (e) => {
+        setInputs({
+            ...inputs,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    const intl = useIntl();
+    const api = useContext(ApiContext);
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+
+        const validator = new Validator(intl, inputs);
+        validator.notEmpty("name");
+        validator.notEmpty("date");
+        validator.notEmpty("address");
+
+        const errors = validator.getErrors();
+        if (errors.length > 0) {
+            setErrors(errors);
+            return;
+        }
+
+        const [result, error] = await api.post("/tournaments", inputs);
+        if (result) {
+            navigate("/");
+        } else {
+            errors.push(error.format(intl));
+            setErrors(errors);
+        }
+    }
 
     const addParticipant = useRef(null);
 
@@ -53,34 +90,49 @@ export default function TournamentCreate() {
             </dialog>
 
             <div className="header-with-buttons">
-                    <h2><FormattedMessage id="page.tournaments.create.title" /></h2>
-                    <div>
-                        <button>
-                            <FormattedMessage id="button.save" />
-                        </button>
-                        <Link to="/tournaments">
-                            <FormattedMessage id="button.cancel" />
-                        </Link>
-                    </div>
+                <h2><FormattedMessage id="page.tournaments.create.title" /></h2>
+                <div>
+                    <button onClick={onSubmit}>
+                        <FormattedMessage id="button.save" />
+                    </button>
+                    <Link to="/tournaments">
+                        <FormattedMessage id="button.cancel" />
+                    </Link>
                 </div>
+            </div>
 
             <form>
-                <label><FormattedMessage id="label.name" /></label>
-                <input type="text" />
+                <label htmlFor="name"><FormattedMessage id="label.name" /></label>
+                <input type="text" id="name" name="name"
+                    value={inputs.name} onChange={onInputsChanged}/>
                 <br />
 
-                <label><FormattedMessage id="label.date" /></label>
-                <input type="date" />
+                <label htmlFor="date"><FormattedMessage id="label.date" /></label>
+                <input type="date" id="date" name="date"
+                    value={inputs.date} onChange={onInputsChanged}/>
                 <br />
 
-                <label><FormattedMessage id="label.category" /></label>
-                <select defaultValue={"3x3x3"}>
-                    <option>3x3x3</option>
-                    <option>4x4x4</option>
-                    <option>Skewb</option>
+                <label htmlFor="address"><FormattedMessage id="label.address" /></label>
+                <input type="text" id="address" name="address"
+                    value={inputs.address} onChange={onInputsChanged}/>
+                <br />
+
+                <label htmlFor="category"><FormattedMessage id="label.category" /></label>
+                <select id="category" name="idCategory"
+                    value={inputs.idCategory} onChange={onInputsChanged}
+                >
+                    <option value={1}>3x3x3</option>
+                    <option value={2}>4x4x4</option>
+                    <option value={3}>Skewb</option>
                 </select>
                 <br />
             </form>
+
+            <ul className="error">
+                {errors.map((error, index) => (
+                    <li key={index}>{error}</li>
+                ))}
+            </ul>
 
             <h3><FormattedMessage id="page.tournaments.details.participants" /></h3>
 
