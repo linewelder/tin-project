@@ -2,6 +2,7 @@ import db from "../db.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import joi from "joi";
+import { tryValidate } from "../validation.js";
 
 function createAuthToken(user) {
     const claims = {
@@ -36,12 +37,7 @@ export async function register(req, res) {
         password: req.body.password,
     };
 
-    const { error } = userSchema.validate(data);
-    if (error) {
-        res.status(400).json({
-            error: error.details[0].message,
-            formattable: false,
-        });
+    if (!tryValidate(res, data, userSchema)) {
         return;
     }
 
@@ -77,17 +73,35 @@ export async function register(req, res) {
     });
 }
 
+const credentialsSchema = joi.object({
+    email: joi.string()
+        .max(75)
+        .required(),
+    password: joi.string()
+        .max(32)
+        .required(),
+});
+
 export async function login(req, res) {
+    const data = {
+        email: req.body.email,
+        password: req.body.password,
+    };
+
+    if (!tryValidate(res, data, credentialsSchema)) {
+        return;
+    }
+
     const rows = await db.query(
         "SELECT * FROM User WHERE Email = ?",
-        [req.body.email]);
+        [data.email]);
 
     if (rows.length === 0) {
         res.status(404).json({ "error": "wrong-login-data" });
         return;
     }
 
-    const passwordCorrect = bcrypt.compareSync(req.body.password, rows[0].Password);
+    const passwordCorrect = bcrypt.compareSync(data.password, rows[0].Password);
     if (!passwordCorrect) {
         res.status(401).json({ "error": "wrong-login-data" });
         return;
