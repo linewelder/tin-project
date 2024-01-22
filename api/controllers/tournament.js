@@ -161,7 +161,6 @@ export async function update(req, res) {
     }
 
     const data = {
-        id,
         name: req.body.name,
         date: req.body.date,
         address: req.body.address,
@@ -176,7 +175,8 @@ export async function update(req, res) {
         "UPDATE Tournament " +
         "SET Name=?, Date=?, Address=?, IdCategory=?, IsClosed=? " +
         "WHERE IdTournament = ?",
-        [[data.name, data.date, data.address, data.idCategory, data.isClosed, id]]);
+        [data.name, data.date, data.address, data.idCategory, data.isClosed, id]);
+    data.id = id;
 
     res.json(data);
 }
