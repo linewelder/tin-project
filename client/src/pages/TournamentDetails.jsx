@@ -1,7 +1,8 @@
 import { FormattedDate, FormattedMessage } from "react-intl";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import { useApiFetch } from "../apiContext.jsx";
+import { useApiFetch, usePagination } from "../apiContext.jsx";
+import Pagination from "../components/Pagination.jsx";
 
 export default function TournamentDetails() {
     const { id } = useParams();
@@ -11,6 +12,7 @@ export default function TournamentDetails() {
 
     const path = `/tournaments/${id}`;
     const tournament = useApiFetch(path, null, setError);
+    const participants = usePagination(path + "/participants", 3, setError);
 
     const deleteConfirm = useRef(null);
 
@@ -54,6 +56,30 @@ export default function TournamentDetails() {
                     <dt><FormattedMessage id="label.id" /></dt>
                     <dd>{tournament.id}</dd>
                 </dl>
+
+                <h3><FormattedMessage id="page.tournaments.details.participants" /></h3>
+
+                <Pagination pagination={participants} />
+                <table>
+                    <thead>
+                        <tr>
+                            <th><FormattedMessage id="table.participants.id" /></th>
+                            <th><FormattedMessage id="table.participants.first-name" /></th>
+                            <th><FormattedMessage id="table.participants.last-name" /></th>
+                            <th><FormattedMessage id="table.participants.result" /></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {participants.elements.map(participant => (
+                            <tr key={participant.id}>
+                                <td>{participant.id}</td>
+                                <td>{participant.firstName}</td>
+                                <td>{participant.lastName}</td>
+                                <td>{participant.result}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </>)}
         </>
     );
