@@ -82,6 +82,29 @@ export async function getParticipants(req, res) {
     res.json(participants);
 }
 
+export async function deleteOne(req, res) {
+    const id = req.params.id;
+    if (id < 1) return res.status(404).json({ "error": "not-found" });
+
+    const rows = await db.query(
+        "SELECT Organizer FROM Tournament WHERE IdTournament = ?",
+        [id]);
+    if (rows.length < 1) {
+        return res.status(404).json({ "error": "not-found" });
+    }
+
+    const canDelete =
+        rows[0].Organizer === req.claims.id ||
+        req.claims.admin;
+    if (!canDelete) {
+        return req.status(403).json({ error: "access-denied" });
+    }
+
+    await db.query("DELETE FROM Tournament WHERE IdTournament = ?", [id]);
+
+    res.status(204).end();
+}
+
 const newTournamentSchema = joi.object({
     name: joi.string()
         .max(50)
