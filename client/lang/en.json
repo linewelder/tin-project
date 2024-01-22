@@ -1,9 +1,11 @@
 {
+    "button.add": "Add",
     "button.add-new": "Add New",
     "button.cancel": "Cancel",
     "button.edit": "Edit",
     "button.delete": "Delete",
     "button.logout": "Logout",
+    "button.save": "Save",
     "error.access-denied": "Access denied",
     "error.email-exists": "User with this email already exists",
     "error.invalid-token": "Invalid token",
@@ -15,6 +17,7 @@
     "error.lastName.empty": "Last name is required",
     "error.password.empty": "Password is required",
     "error.password.doesnt-match": "Passwords do not match",
+    "table.actions": "Actions",
     "table.participant.id": "ID",
     "table.participant.first-name": "First Name",
     "table.participant.full-name": "Full Name",
@@ -43,6 +46,8 @@
     "page.tournaments.title": "Tournaments",
     "page.tournaments.all": "All Tournaments",
     "page.tournaments.users": "Your Tournaments",
+    "page.tournaments.create.title": "Create Tournament",
+    "page.tournaments.create.add-participant": "Add Participant",
     "page.tournaments.details.delete-confirm": "Are you sure you want to delete {name}?",
     "page.tournaments.details.participants": "Participants",
     "page.login.title": "Log in",
@@ -58,5 +63,6 @@
     "label.date": "Date:",
     "label.category": "Category:",
     "label.created-by": "Created by:",
-    "label.id": "ID:"
+    "label.id": "ID:",
+    "label.name": "Name:"
 }

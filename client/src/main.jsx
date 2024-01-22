@@ -11,6 +11,7 @@ import Signup from "./pages/Signup";
 import Categories from "./pages/Categories";
 import CategoryDetails from './pages/CategoryDetails.jsx';
 import Tournaments from "./pages/Tournaments.jsx";
+import TournamentCreate from './pages/TournamentCreate.jsx';
 import TournamentDetails from './pages/TournamentDetails.jsx';
 import Participants from './pages/Participants.jsx';
 import ParticipantDetails from './pages/ParticipantDetails.jsx';
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
             {
                 path: "/tournaments/:id",
                 element: <TournamentDetails />,
+            },
+            {
+                path: "/tournaments/create",
+                element: <TournamentCreate />,
             },
         ],
     },
