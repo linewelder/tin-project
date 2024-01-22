@@ -12,7 +12,7 @@ function createAuthToken(user) {
         admin: user.admin
     };
 
-    return jwt.sign(claims, "mysecret");
+    return jwt.sign(claims, process.env.JWT_SECRET);
 }
 
 const userSchema = joi.object({

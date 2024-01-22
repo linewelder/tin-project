@@ -15,7 +15,7 @@ export function authorize({ admin } = { admin: false }) {
             return;
         }
 
-        jwt.verify(token, "mysecret", (err, claims) => {
+        jwt.verify(token, process.env.JWT_SECRET, (err, claims) => {
             if (err) {
                 res.status(401).json({ error: "invalid-token" });
                 return;
