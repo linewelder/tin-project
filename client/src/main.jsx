@@ -10,6 +10,7 @@ import ErrorPage from './pages/ErrorPage.jsx';
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Categories from "./pages/Categories";
+import CategoryCreate from './pages/CategoryCreate.jsx';
 import CategoryDetails from './pages/CategoryDetails.jsx';
 import Tournaments from "./pages/Tournaments.jsx";
 import TournamentCreate from './pages/TournamentCreate.jsx';
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
             {
                 path: "/categories/:id",
                 element: <CategoryDetails />,
+            },
+            {
+                path: "/categories/create",
+                element: <CategoryCreate />,
             },
             {
                 path: "/participants",

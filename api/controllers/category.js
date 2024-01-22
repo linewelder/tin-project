@@ -1,7 +1,7 @@
 import joi from "joi";
 import db from "../db.js";
 import { toCategory, toTournament } from "../models.js";
-import { getPaginationParams } from "../validation.js";
+import { getPaginationParams, tryValidate } from "../validation.js";
 
 export async function getAll(req, res) {
     const rows = await db.query("SELECT * FROM Category");
