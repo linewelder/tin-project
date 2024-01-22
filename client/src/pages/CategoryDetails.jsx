@@ -1,7 +1,8 @@
 import { FormattedDate, FormattedMessage } from "react-intl";
 import { Link, useParams } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
-import { useApiFetch } from "../apiContext.jsx";
+import { useContext, useEffect, useRef, useState } from "react";
+import { ApiContext, useApiFetch } from "../apiContext.jsx";
+import Pagination from "../components/Pagination.jsx";
 
 export default function CategoryDetails() {
     const { id } = useParams();
@@ -12,8 +13,24 @@ export default function CategoryDetails() {
     const path = `/categories/${id}`;
     const category = useApiFetch(path, null, setError);
     const currentTournaments = useApiFetch(path + "/current-tournaments", [], setError);
-    const tournamentHistory = useApiFetch(path + "/tournament-history", [], setError);
     const bestParticipants = useApiFetch(path + "/best-participants", [], setError);
+
+    const api = useContext(ApiContext);
+
+    const [tournamentHistory, setTournamentHistory] = useState({ totalCount: 0 });
+    const getTournamentHistory = async (first, count) => {
+        const [data, error] = await api.get(
+            `${path}/tournament-history?first=${first}&count=${count}`);
+        console.log(data);
+        if (error) {
+            setError(error);
+            return;
+        }
+
+        setTournamentHistory(data);
+        return data;
+    };
+    useEffect(() => { getTournamentHistory(0, 3); }, []);
 
     const deleteConfirm = useRef(null);
 
@@ -73,8 +90,12 @@ export default function CategoryDetails() {
                 </table>
             </>)}
 
-            {tournamentHistory.length > 0 && (<>
+            {tournamentHistory.totalCount > 0 && (<>
                 <h3><FormattedMessage id="page.categories.details.tournament-history" /></h3>
+                <Pagination
+                    pageSize={3}
+                    totalCount={tournamentHistory.totalCount}
+                    onPageChanged={getTournamentHistory} />
                 <table>
                     <thead>
                         <tr>
@@ -83,7 +104,7 @@ export default function CategoryDetails() {
                         </tr>
                     </thead>
                     <tbody>
-                        {tournamentHistory.map(tournament => (
+                        {tournamentHistory.elements.map(tournament => (
                             <tr key={tournament.id}>
                                 <td>
                                     <Link to={`/tournaments/${tournament.id}`}>
