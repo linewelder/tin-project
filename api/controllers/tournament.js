@@ -32,7 +32,7 @@ export async function getOne(req, res) {
     const rows = await db.query(
         "SELECT IdTournament, Tournament.Name AS Name, Date, Address," +
         "       Category.Name AS CategoryName, IsClosed," +
-        "       FirstName, LastName " +
+        "       Organizer, FirstName, LastName " +
         "FROM Tournament " +
         "JOIN Category ON Category.IdCategory = Tournament.IdCategory " +
         "JOIN User ON IdUser = Organizer " +
@@ -50,6 +50,7 @@ export async function getOne(req, res) {
         address: rows[0].Address,
         category: rows[0].CategoryName,
         organizer: {
+            id: rows[0].Organizer,
             firstName: rows[0].FirstName,
             lastName: rows[0].LastName,
         },
