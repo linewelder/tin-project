@@ -31,6 +31,8 @@ function Header() {
                         <>
                             <span id="user-name">
                                 {api.currentUser.firstName} {api.currentUser.lastName}
+                                {api.currentUser.admin &&
+                                    <span> <FormattedMessage id="label.admin" /></span>}
                             </span>
                             <button id="logout-btn" onClick={logout}>
                                 <FormattedMessage id="button.logout" />
