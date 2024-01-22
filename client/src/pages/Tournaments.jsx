@@ -4,6 +4,42 @@ import { useContext, useEffect, useState } from "react";
 import { ApiContext, usePagination } from "../apiContext.jsx";
 import Pagination from "../components/Pagination.jsx";
 
+function TournamentList({ tournaments }) {
+    return (
+        <table>
+            <thead>
+                <tr>
+                    <th><FormattedMessage id="table.tournament.id" /></th>
+                    <th><FormattedMessage id="table.tournament.name" /></th>
+                    <th><FormattedMessage id="table.tournament.date" /></th>
+                    <th><FormattedMessage id="table.tournament.category" /></th>
+                    <th><FormattedMessage id="table.tournament.status" /></th>
+                </tr>
+            </thead>
+            <tbody>
+                {tournaments.map(tournament =>
+                    <tr key={tournament.id}>
+                        <td>{tournament.id}</td>
+                        <td>
+                            <Link to={`${tournament.id}`}>
+                                {tournament.name}
+                            </Link>
+                        </td>
+                        <td>
+                            <FormattedDate value={tournament.date} />
+                        </td>
+                        <td>{tournament.category}</td>
+                        <td>
+                            <FormattedMessage id={
+                                `table.tournament.status.${tournament.isClosed ? "closed" : "open" }`} />
+                        </td>
+                    </tr>
+                )}
+            </tbody>
+        </table>
+    );
+}
+
 export default function Categories() {
     const [ error, setError ] = useState(null);
     useEffect(() => { if (error) throw error; }, [error]);
@@ -26,74 +62,14 @@ export default function Categories() {
                     </Link>
 
                     <Pagination pagination={usersTournaments} />
-                    <table>
-                        <thead>
-                            <tr>
-                                <th><FormattedMessage id="table.tournament.id" /></th>
-                                <th><FormattedMessage id="table.tournament.name" /></th>
-                                <th><FormattedMessage id="table.tournament.date" /></th>
-                                <th><FormattedMessage id="table.tournament.category" /></th>
-                                <th><FormattedMessage id="table.tournament.status" /></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {usersTournaments.elements.map(tournament =>
-                                <tr key={tournament.id}>
-                                    <td>{tournament.id}</td>
-                                    <td>
-                                        <Link to={`${tournament.id}`}>
-                                            {tournament.name}
-                                        </Link>
-                                    </td>
-                                    <td>
-                                        <FormattedDate value={tournament.date} />
-                                    </td>
-                                    <td>{tournament.category}</td>
-                                    <td>
-                                        <FormattedMessage id={
-                                            `table.tournament.status.${tournament.isClosed ? "closed" : "open" }`} />
-                                    </td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
+                    <TournamentList tournaments={usersTournaments.elements} />
                 </>
             )}
 
             <h2><FormattedMessage id="page.tournaments.all" /></h2>
 
             <Pagination pagination={tournaments} />
-            <table>
-                <thead>
-                    <tr>
-                        <th><FormattedMessage id="table.tournament.id" /></th>
-                        <th><FormattedMessage id="table.tournament.name" /></th>
-                        <th><FormattedMessage id="table.tournament.date" /></th>
-                        <th><FormattedMessage id="table.tournament.category" /></th>
-                        <th><FormattedMessage id="table.tournament.status" /></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {tournaments.elements.map(tournament =>
-                        <tr key={tournament.id}>
-                            <td>{tournament.id}</td>
-                            <td>
-                                <Link to={`${tournament.id}`}>
-                                    {tournament.name}
-                                </Link>
-                            </td>
-                            <td>
-                                <FormattedDate value={tournament.date} />
-                            </td>
-                            <td>{tournament.category}</td>
-                            <td>
-                                <FormattedMessage id={
-                                    `table.tournament.status.${tournament.isClosed ? "closed" : "open" }`} />
-                            </td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>
+            <TournamentList tournaments={tournaments.elements} />
         </>
     );
 }
