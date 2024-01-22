@@ -91,7 +91,7 @@ export function useApiFetch(path, defaultValue, onError) {
 
 export function usePaginatedFetch(path, pageSize, setError) {
     const api = useContext(ApiContext);
-    const [data, setData] = useState({ totalCount: 0 });
+    const [data, setData] = useState({ totalCount: 0, elements: [] });
 
     const loadData = async (first, count) => {
         const [data, error] = await api.get(
