@@ -68,6 +68,7 @@
     "button.signup": "Sign up",
     "label.admin": "(Admin)",
     "label.address": "Address:",
+    "label.closed": "Closed",
     "label.email": "E-mail:",
     "label.first-name": "First Name:",
     "label.last-name": "Last Name:",

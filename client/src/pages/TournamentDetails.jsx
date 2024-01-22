@@ -1,7 +1,7 @@
 import { FormattedDate, FormattedMessage } from "react-intl";
 import { Link, useParams } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
-import { useApiFetch, usePagination } from "../apiContext.jsx";
+import { useContext, useEffect, useRef, useState } from "react";
+import { ApiContext, useApiFetch, usePagination } from "../apiContext.jsx";
 import Pagination from "../components/Pagination.jsx";
 
 export default function TournamentDetails() {
@@ -13,6 +13,11 @@ export default function TournamentDetails() {
     const path = `/tournaments/${id}`;
     const tournament = useApiFetch(path, null, setError);
     const participants = usePagination(path + "/participants", 3, setError);
+
+    const api = useContext(ApiContext);
+    const canEdit = api.currentUser !== null && (
+        api.currentUser.id === tournament?.organizer.id ||
+        api.currentUser.admin);
 
     const deleteConfirm = useRef(null);
 
@@ -36,14 +41,18 @@ export default function TournamentDetails() {
 
                 <div className="header-with-buttons">
                     <h2>{tournament.name}</h2>
-                    <div>
-                        <Link to="edit" className="button-link">
-                            <FormattedMessage id="button.edit" />
-                        </Link>
+                    {canEdit && <div>
+                        {!tournament.isClosed ? (
+                            <Link to="edit" className="button-link">
+                                <FormattedMessage id="button.edit" />
+                            </Link>
+                        ) : (
+                            <span><FormattedMessage id="label.closed" /></span>
+                        )}
                         <button onClick={() => deleteConfirm.current.showModal()}>
                             <FormattedMessage id="button.delete" />
                         </button>
-                    </div>
+                    </div>}
                 </div>
                 
                 <dl>
