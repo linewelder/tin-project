@@ -49,6 +49,8 @@ export default function TournamentDetails() {
                 <dl>
                     <dt><FormattedMessage id="label.date" /></dt>
                     <dd><FormattedDate value={tournament.date} /></dd>
+                    <dt><FormattedMessage id="label.address" /></dt>
+                    <dd>{tournament.address}</dd>
                     <dt><FormattedMessage id="label.category" /></dt>
                     <dd>{tournament.category}</dd>
                     <dt><FormattedMessage id="label.created-by" /></dt>

@@ -29,7 +29,7 @@ export async function getOne(req, res) {
     if (id < 1) return res.status(404).json({ "error": "not-found" });
 
     const rows = await db.query(
-        "SELECT IdTournament, Tournament.Name AS Name, Date," +
+        "SELECT IdTournament, Tournament.Name AS Name, Date, Address," +
         "       Category.Name AS CategoryName, IsClosed," +
         "       FirstName, LastName " +
         "FROM Tournament " +
@@ -46,6 +46,7 @@ export async function getOne(req, res) {
         id: rows[0].IdTournament,
         name: rows[0].Name,
         date: rows[0].Date,
+        address: rows[0].Address,
         category: rows[0].CategoryName,
         organizer: {
             firstName: rows[0].FirstName,

@@ -55,6 +55,7 @@
     "page.signup.title": "Sign up",
     "button.login": "Log in",
     "button.signup": "Sign up",
+    "label.address": "Address:",
     "label.email": "E-mail:",
     "label.first-name": "First Name:",
     "label.last-name": "Last Name:",
