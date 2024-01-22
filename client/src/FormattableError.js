@@ -1,4 +1,4 @@
-export default class Error {
+export default class FormattableError {
     constructor(formattable, messageOrId) {
         this.formattable = formattable;
         this.messageOrId = messageOrId;

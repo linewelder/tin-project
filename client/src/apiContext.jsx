@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
-import Error from "./Error.js";
+import FormattableError from "./FormattableError.js";
 
 export const ApiContext = createContext();
 
@@ -28,14 +28,14 @@ export function ApiContextProvider({ children }) {
             return [result.data, null];
         } catch (error) {
             if (!error.response) {
-                return [null, new Error(false, error.message)];
+                return [null, new FormattableError(false, error.message)];
             }
 
             if (error.response.data.formattable === false) {
-                return [null, new Error(false, error.response.data.error)];
+                return [null, new FormattableError(false, error.response.data.error)];
             }
 
-            return [null, new Error(true, `error.${error.response.data.error}`)];
+            return [null, new FormattableError(true, `error.${error.response.data.error}`)];
         }
     };
 
