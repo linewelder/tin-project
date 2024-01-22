@@ -1,5 +1,5 @@
 import { FormattedMessage } from "react-intl";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect, useRef, useState } from "react";
 import { ApiContext, useApiFetch } from "../apiContext.jsx";
 
@@ -17,6 +17,13 @@ export default function ParticipantDetails() {
 
     const deleteConfirm = useRef(null);
 
+    const navigate = useNavigate();
+    const deleteParticipant = async () => {
+        const [_, error] = await api.delete(path);
+        if (error) setError(error);
+        else navigate("/participants");
+    };
+
     return (
         <>
             {participant && (<>
@@ -27,7 +34,7 @@ export default function ParticipantDetails() {
                             values={{ firstName: participant.firstName, lastName: participant.lastName }} />
                     </h2>
 
-                    <button className="destructive-btn" onClick={() => deleteConfirm.current.close()}>
+                    <button className="destructive-btn" onClick={deleteParticipant}>
                         <FormattedMessage id="button.delete" />
                     </button>
                     <a href="#" onClick={() => deleteConfirm.current.close()}>
@@ -41,7 +48,7 @@ export default function ParticipantDetails() {
                         <Link to="edit" className="button-link">
                             <FormattedMessage id="button.edit" />
                         </Link>
-                        <button onClick={() => deleteConfirm.current.showModal()}>
+                        <button onClick={() => deleteConfirm.current.showModal()} className="destructive-btn">
                             <FormattedMessage id="button.delete" />
                         </button>
                     </div>}
