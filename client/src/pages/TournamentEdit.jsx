@@ -108,6 +108,20 @@ export default function TournamentEdit() {
         setParticipants(participants.filter(x => x.id !== participant.id));
     };
 
+    const resultUpdater = (participant) => {
+        return (e) => {
+            const index = participants.findIndex(x => x.id == participant.id);
+            setParticipants([
+                ...participants.slice(0, index),
+                {
+                    ...participant,
+                    result: e.target.value,
+                },
+                ...participants.slice(index + 1)
+            ]);
+        };
+    };
+
     const [addingParticipants, setAddingParticipants] = useState(false);
     const closeConfirm = useRef();
 
@@ -204,6 +218,7 @@ export default function TournamentEdit() {
                                 <th><FormattedMessage id="table.participant.id" /></th>
                                 <th><FormattedMessage id="table.participant.first-name" /></th>
                                 <th><FormattedMessage id="table.participant.last-name" /></th>
+                                <th><FormattedMessage id="table.participant.result" /></th>
                                 <th><FormattedMessage id="table.actions" /></th>
                             </tr>
                         </thead>
@@ -213,6 +228,8 @@ export default function TournamentEdit() {
                                     <td>{participant.id}</td>
                                     <td>{participant.firstName}</td>
                                     <td>{participant.lastName}</td>
+                                    <td><input type="number" value={participant.result ?? ""}
+                                        onChange={resultUpdater(participant)} /></td>
                                     <td>
                                         <button onClick={() => removeParticipant(participant)}>
                                             <FormattedMessage id="button.delete" />
