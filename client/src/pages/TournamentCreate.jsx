@@ -65,7 +65,7 @@ export default function TournamentCreate() {
             participants: participants.map(x => x.id),
         });
         if (result) {
-            navigate("/");
+            navigate("/tournament");
         } else {
             errors.push(error.format(intl));
             setErrors(errors);
