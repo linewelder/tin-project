@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useRef, useState } from "react";
 import Validator from "../Validator";
 import { ApiContext, useApiFetch, usePagination } from "../apiContext";
-import Pagination from "../components/Pagination";
+import AddParticipantDialog from "../components/AddParticipantDialog";
 
 export default function TournamentCreate() {
     const [inputs, setInputs] = useState({
@@ -72,45 +72,16 @@ export default function TournamentCreate() {
         }
     }
 
-    const addParticipantDialog = useRef(null);
+    const [addingParticipants, setAddingParticipants] = useState(false);
 
     return (
         <>
-            <dialog ref={addParticipantDialog}>
-                <h2><FormattedMessage id="page.tournaments.create.add-participant" /></h2>
-                <Pagination pagination={participants} />
-                <table>
-                    <thead>
-                        <tr>
-                            <th><FormattedMessage id="table.participant.id" /></th>
-                            <th><FormattedMessage id="table.participant.first-name" /></th>
-                            <th><FormattedMessage id="table.participant.last-name" /></th>
-                            <th><FormattedMessage id="table.actions" /></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {participants.elements.map(participant => (
-                            <tr key={participant.id}>
-                                <td>{participant.id}</td>
-                                <td>{participant.firstName}</td>
-                                <td>{participant.lastName}</td>
-                                <td>
-                                    {!isAdded(participant) &&
-                                        <button onClick={() => addParticipant(participant)}>
-                                            <FormattedMessage id="button.add" />
-                                        </button>
-                                    }
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-                <br />
-
-                <button onClick={() => addParticipantDialog.current.close()}>
-                    <FormattedMessage id="button.close" />
-                </button>
-            </dialog>
+            <AddParticipantDialog
+                pagination={participants}
+                onAdd={addParticipant}
+                isAdded={isAdded}
+                open={addingParticipants}
+                onClose={() => setAddingParticipants(false)} />
 
             <div className="header-with-buttons">
                 <h2><FormattedMessage id="page.tournaments.create.title" /></h2>
@@ -161,7 +132,7 @@ export default function TournamentCreate() {
 
             <h3><FormattedMessage id="page.tournaments.details.participants" /></h3>
 
-            <button onClick={() => addParticipantDialog.current.showModal()}>
+            <button onClick={() => setAddingParticipants(true)}>
                 <FormattedMessage id="page.tournaments.create.add-participant" />
             </button>
 
