@@ -52,6 +52,7 @@
     "page.categories.details.current-tournaments": "Current Tournaments",
     "page.categories.details.tournament-history": "Tournament History",
     "page.categories.details.best-participants": "Best Participants",
+    "page.error.title": "An Error Occured!",
     "page.participants.title": "Participants",
     "page.participants.details.delete-confirm": "Are you sure you want to delete {firstName} {lastName}?",
     "page.participants.details.records": "Personal Records",

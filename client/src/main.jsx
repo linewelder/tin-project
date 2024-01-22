@@ -6,6 +6,7 @@ import { ApiContextProvider } from './apiContext.jsx';
 
 import Header from "./components/Header";
 
+import ErrorPage from './pages/ErrorPage.jsx';
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Categories from "./pages/Categories";
@@ -28,6 +29,15 @@ const Layout = () => (
     </>
 );
 
+const ErrorLayout = () => (
+    <>
+        <Header />
+        <div className="wrapper">
+            <ErrorPage />
+        </div>
+    </>
+);
+
 const NarrowLayout = () => (
     <>
         <Header />
@@ -41,6 +51,7 @@ const router = createBrowserRouter([
     {
         path: "/",
         element: <Layout />,
+        errorElement: <ErrorLayout />,
         children: [
             {
                 path: "/categories",
@@ -75,6 +86,7 @@ const router = createBrowserRouter([
     {
         path: "/",
         element: <NarrowLayout />,
+        errorElement: <ErrorLayout />,
         children: [
             {
                 path: "/login",
