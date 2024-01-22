@@ -13,7 +13,7 @@ export function tryValidate(res, object, schema) {
 
 export function getPaginationParams(req) {
     var first = +req.query.first;
-    if (!first || first < 1) first = 1;
+    if (!first || first < 0) first = 0;
 
     var count = +req.query.count;
     if (!count || count < 1) count = 8;
