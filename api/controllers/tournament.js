@@ -98,10 +98,12 @@ export async function addNew(req, res) {
         [[data.name, data.date, data.address, data.idCategory, data.organizer, data.isClosed]]);
     data.id = result.insertId;
 
-    const participantData = data.participants.map(x => [x, data.id]);
-    await db.query(
-        "INSERT INTO TournamentParticipant(IdParticipant, IdTournament) VALUES ?",
-        [participantData]);
+    if (data.participants.length > 0) {
+        const participantData = data.participants.map(x => [x, data.id]);
+        await db.query(
+            "INSERT INTO TournamentParticipant(IdParticipant, IdTournament) VALUES ?",
+            [participantData]);
+    }
 
     res.json(data);
 }
