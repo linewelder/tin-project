@@ -38,5 +38,20 @@ export async function getOne(req, res) {
         firstName: rows[0].FirstName,
         lastName: rows[0].LastName,
     };
+
+    const recordRows = await db.query(
+        "SELECT Tournament.IdCategory, Category.Name AS CategoryName, Min(Time) AS Record " +
+        "FROM TournamentParticipant " +
+        "JOIN Tournament ON Tournament.IdTournament = TournamentParticipant.IdTournament " +
+        "JOIN Category ON Category.IdCategory = Tournament.IdCategory " +
+        "WHERE IdParticipant = ? " +
+        "GROUP BY Tournament.IdCategory",
+        [id]);
+    participant.records = recordRows.map(row => ({
+        idCategory: row.IdCategory,
+        category: row.CategoryName,
+        result: row.Record,
+    }));
+
     res.json(participant);
 }
