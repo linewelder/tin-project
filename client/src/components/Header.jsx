@@ -15,7 +15,7 @@ function Header() {
     return (
         <header className="Header">
             <div className="header-wrapper">
-                <div>
+                <nav>
                     <NavLink to="/categories">
                         <FormattedMessage id="page.categories.title" />
                     </NavLink>
@@ -25,7 +25,7 @@ function Header() {
                     <NavLink to="/participants">
                         <FormattedMessage id="page.participants.title" />
                     </NavLink>
-                </div>
+                </nav>
                 <div>
                     {api.currentUser ? (
                         <>
