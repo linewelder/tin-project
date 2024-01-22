@@ -58,16 +58,17 @@ export async function getBestParticipants(req, res) {
     if (id < 1) return res.status(404).json({ "error": "not-found" });
 
     const rows = await db.query(
-        "SELECT Participant.IdParticipant, FirstName, LastName, Date, Time " +
+        "SELECT Participant.IdParticipant, Tournament.IdTournament, FirstName, LastName, Date, Time " +
         "FROM TournamentParticipant " +
         "JOIN Tournament ON Tournament.IdTournament = TournamentParticipant.IdTournament " +
         "JOIN Participant ON Participant.IdParticipant = TournamentParticipant.IdParticipant " +
-        "WHERE IdCategory = ? " +
+        "WHERE IdCategory = ? AND Time IS NOT NULL " +
         "ORDER BY Time " +
         "LIMIT 10",
         [id]);
     res.json(rows.map(row => ({
         participantId: row.IdParticipant,
+        tournamentId: row.IdTournament,
         firstName: row.FirstName,
         lastName: row.LastName,
         date: row.Date,

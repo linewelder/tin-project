@@ -54,7 +54,7 @@
     "page.categories.details.delete-confirm": "Are you sure you want to delete {name}?",
     "page.categories.details.current-tournaments": "Current Tournaments",
     "page.categories.details.tournament-history": "Tournament History",
-    "page.categories.details.best-participants": "Best Participants",
+    "page.categories.details.best-results": "Best Results",
     "page.categories.create.title": "Add Category",
     "page.categories.edit.title": "Edit {name}",
     "page.error.title": "An Error Occured!",

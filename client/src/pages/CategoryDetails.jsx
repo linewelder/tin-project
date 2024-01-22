@@ -111,7 +111,7 @@ export default function CategoryDetails() {
             </>)}
 
             {bestParticipants.length > 0 && (<>
-                <h3><FormattedMessage id="page.categories.details.best-participants" /></h3>
+                <h3><FormattedMessage id="page.categories.details.best-results" /></h3>
                 <table>
                     <thead>
                         <tr>
@@ -122,7 +122,7 @@ export default function CategoryDetails() {
                     </thead>
                     <tbody>
                         {bestParticipants.map(result => (
-                            <tr key={result.participantId}>
+                            <tr key={[result.participantId, result.tournamentId]}>
                                 <td>{result.firstName} {result.lastName}</td>
                                 <td><FormattedDate value={result.date} /></td>
                                 <td>{result.result}</td>
