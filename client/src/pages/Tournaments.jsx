@@ -1,14 +1,14 @@
 import { FormattedDate, FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { usePaginatedFetch } from "../apiContext.jsx";
+import { usePagination } from "../apiContext.jsx";
 import Pagination from "../components/Pagination.jsx";
 
 export default function Categories() {
     const [ error, setError ] = useState(null);
     useEffect(() => { if (error) throw error; }, [error]);
 
-    const [tournaments, loadTournaments] = usePaginatedFetch("/tournaments", 3, setError);
+    const tournaments = usePagination("/tournaments", 3, setError);
 
     return (
         <>
@@ -18,10 +18,7 @@ export default function Categories() {
                 <FormattedMessage id="button.add-new" />
             </Link>
 
-            <Pagination
-                pageSize={3}
-                totalCount={tournaments.totalCount}
-                onPageChanged={loadTournaments} />
+            <Pagination pagination={tournaments} />
 
             <table>
                 <thead>

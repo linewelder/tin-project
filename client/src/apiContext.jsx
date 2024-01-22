@@ -89,11 +89,11 @@ export function useApiFetch(path, defaultValue, onError) {
     return result;
 }
 
-export function usePaginatedFetch(path, pageSize, setError) {
+export function usePagination(path, pageSize, setError) {
     const api = useContext(ApiContext);
     const [data, setData] = useState({ totalCount: 0, elements: [] });
 
-    const loadData = async (first, count) => {
+    const load = async (first, count) => {
         const [data, error] = await api.get(
             `${path}?first=${first}&count=${count}`);
         if (error) {
@@ -104,7 +104,7 @@ export function usePaginatedFetch(path, pageSize, setError) {
         setData(data);
         return data;
     };
-    useEffect(() => { loadData(0, pageSize); }, []);
+    useEffect(() => { load(0, pageSize); }, []);
 
-    return [data, loadData];
+    return { pageSize, load, ...data };
 }

@@ -1,7 +1,7 @@
 import { FormattedDate, FormattedMessage } from "react-intl";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import { useApiFetch, usePaginatedFetch } from "../apiContext.jsx";
+import { useApiFetch, usePagination } from "../apiContext.jsx";
 import Pagination from "../components/Pagination.jsx";
 
 export default function CategoryDetails() {
@@ -13,8 +13,7 @@ export default function CategoryDetails() {
     const path = `/categories/${id}`;
     const category = useApiFetch(path, null, setError);
     const currentTournaments = useApiFetch(path + "/current-tournaments", [], setError);
-    const [tournamentHistory, loadTournamentHistory] =
-        usePaginatedFetch(path + "/tournament-history", 3, setError);
+    const tournamentHistory = usePagination(path + "/tournament-history", 3, setError);
     const bestParticipants = useApiFetch(path + "/best-participants", [], setError);
 
     const deleteConfirm = useRef(null);
@@ -77,10 +76,7 @@ export default function CategoryDetails() {
 
             {tournamentHistory.totalCount > 0 && (<>
                 <h3><FormattedMessage id="page.categories.details.tournament-history" /></h3>
-                <Pagination
-                    pageSize={3}
-                    totalCount={tournamentHistory.totalCount}
-                    onPageChanged={loadTournamentHistory} />
+                <Pagination pagination={tournamentHistory} />
                 <table>
                     <thead>
                         <tr>
