@@ -11,10 +11,11 @@ import Signup from "./pages/Signup";
 import Categories from "./pages/Categories";
 import CategoryDetails from './pages/CategoryDetails.jsx';
 import Tournaments from "./pages/Tournaments.jsx";
-
-import English from '../lang/en.json';
 import TournamentDetails from './pages/TournamentDetails.jsx';
 import Participants from './pages/Participants.jsx';
+import ParticipantDetails from './pages/ParticipantDetails.jsx';
+
+import English from '../lang/en.json';
 const locale = navigator.language;
 
 const Layout = () => (
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
             {
                 path: "/participants",
                 element: <Participants />,
+            },
+            {
+                path: "/participants/:id",
+                element: <ParticipantDetails />,
             },
             {
                 path: "/tournaments",

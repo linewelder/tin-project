@@ -36,6 +36,7 @@
     "page.categories.details.tournament-history": "Tournament History",
     "page.categories.details.best-participants": "Best Participants",
     "page.participants.title": "Participants",
+    "page.participants.details.delete-confirm": "Are you sure you want to delete {firstName} {lastName}?",
     "page.tournaments.title": "Tournaments",
     "page.tournaments.all": "All Tournaments",
     "page.tournaments.users": "Your Tournaments",
