@@ -24,3 +24,7 @@
 .Header a.active {
     border-bottom: #ddd 1px solid;
 }
+
+.Header select {
+    margin-left: 8px;
+}
