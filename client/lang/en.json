@@ -35,6 +35,7 @@
     "page.tournaments.title": "Tournaments",
     "page.tournaments.all": "All Tournaments",
     "page.tournaments.users": "Your Tournaments",
+    "page.tournaments.details.delete-confirm": "Are you sure you want to delete {name}?",
     "page.login.title": "Log in",
     "page.signup.title": "Sign up",
     "button.login": "Log in",
@@ -44,5 +45,9 @@
     "label.last-name": "Last Name:",
     "label.password": "Password:",
     "label.password-again": "Password Again:",
-    "label.pagination": "Page {currentPage} out of {totalPages}"
+    "label.pagination": "Page {currentPage} out of {totalPages}",
+    "label.date": "Date:",
+    "label.category": "Category:",
+    "label.created-by": "Created by:",
+    "label.id": "ID:"
 }

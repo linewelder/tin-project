@@ -13,6 +13,7 @@ import CategoryDetails from './pages/CategoryDetails.jsx';
 import Tournaments from "./pages/Tournaments.jsx";
 
 import English from '../lang/en.json';
+import TournamentDetails from './pages/TournamentDetails.jsx';
 const locale = navigator.language;
 
 const Layout = () => (
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
             {
                 path: "/tournaments",
                 element: <Tournaments />,
+            },
+            {
+                path: "/tournaments/:id",
+                element: <TournamentDetails />,
             },
         ],
     },
