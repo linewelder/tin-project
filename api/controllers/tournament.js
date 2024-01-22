@@ -54,3 +54,32 @@ export async function getOne(req, res) {
     };
     res.json(tournament);
 }
+
+export async function getParticipants(req, res) {
+    const id = +req.params.id;
+
+    const first = +req.query.first || 0;
+    const count = +req.query.count || 8;
+
+    const totalCount = (await db.query(
+        "SELECT Count(1) AS TotalCount " +
+        "FROM TournamentParticipant " +
+        "WHERE IdTournament = ?",
+        [id]))[0].TotalCount;
+
+    const rows = await db.query(
+        "SELECT Participant.IdParticipant, FirstName, LastName, Time " +
+        "FROM TournamentParticipant " +
+        "JOIN Participant ON Participant.IdParticipant = TournamentParticipant.IdParticipant " +
+        "WHERE IdTournament = ? " +
+        "LIMIT ? OFFSET ?",
+        [id, count, first]);
+
+    const elements = rows.map(row => ({
+        id: row.IdParticipant,
+        firstName: row.FirstName,
+        lastName: row.LastName,
+        result: row.Time,
+    }));
+    res.json({ totalCount, elements });
+}
