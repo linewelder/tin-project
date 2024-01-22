@@ -207,7 +207,7 @@ export default function TournamentEdit() {
                     ))}
                 </ul>
 
-                <h3>Participants</h3>
+                <h3><FormattedMessage id="page.tournaments.details.participants" /></h3>
                 <button onClick={() => setAddingParticipants(true)}>
                     <FormattedMessage id="page.tournaments.create.add-participant" />
                 </button>
