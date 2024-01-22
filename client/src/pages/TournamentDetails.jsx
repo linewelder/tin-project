@@ -24,7 +24,7 @@ export default function TournamentDetails() {
     const deleteTournament = async () => {
         const [_, error] = await api.delete(path);
         if (error) setError(error);
-        navigate("/tournaments");
+        else navigate("/tournaments");
     };
 
     return (
