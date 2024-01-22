@@ -23,6 +23,20 @@ VALUES (1, 'Pierszy Turniej', '2024-01-01', 1, 1, 1, 'Gdańsk');
 INSERT INTO Tournament(IdTournament, Name, Date, IdCategory, IsClosed, Organizer, Address)
 VALUES (2, 'Drugi Turniej', '2024-01-20', 2, 0, 2, 'Warszawa');
 
+/* Dla pokaza paginacji */
+INSERT INTO Tournament(IdTournament, Name, Date, IdCategory, IsClosed, Organizer, Address)
+VALUES (3, 'Turniej 3', '2024-01-03', 1, 1, 1, 'Gdańsk');
+INSERT INTO Tournament(IdTournament, Name, Date, IdCategory, IsClosed, Organizer, Address)
+VALUES (4, 'Turniej 4', '2024-01-04', 1, 1, 1, 'Gdańsk');
+INSERT INTO Tournament(IdTournament, Name, Date, IdCategory, IsClosed, Organizer, Address)
+VALUES (5, 'Turniej 5', '2024-01-05', 1, 1, 1, 'Gdańsk');
+INSERT INTO Tournament(IdTournament, Name, Date, IdCategory, IsClosed, Organizer, Address)
+VALUES (6, 'Turniej 6', '2024-01-06', 1, 1, 1, 'Gdańsk');
+INSERT INTO Tournament(IdTournament, Name, Date, IdCategory, IsClosed, Organizer, Address)
+VALUES (7, 'Turniej 7', '2024-01-07', 1, 1, 1, 'Gdańsk');
+INSERT INTO Tournament(IdTournament, Name, Date, IdCategory, IsClosed, Organizer, Address)
+VALUES (8, 'Turniej 8', '2024-01-08', 1, 1, 1, 'Gdańsk');
+
 INSERT INTO TournamentParticipant(IdParticipant, IdTournament, Time)
 VALUES (1, 1, 15.576);
 INSERT INTO TournamentParticipant(IdParticipant, IdTournament, Time)
