@@ -1,12 +1,13 @@
 import express from "express";
+import asyncHandler from "express-async-handler";
 import { addNew, getAll, getOne, getParticipants } from "../controllers/tournament.js";
 import { authorize } from "../middleware.js";
 
 const router = express.Router();
 
-router.get("/", getAll);
-router.get("/:id", getOne);
-router.get("/:id/participants", getParticipants);
-router.post("/", authorize(), addNew);
+router.get("/", asyncHandler(getAll));
+router.get("/:id", asyncHandler(getOne));
+router.get("/:id/participants", asyncHandler(getParticipants));
+router.post("/", authorize(), asyncHandler(addNew));
 
 export default router;
