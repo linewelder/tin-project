@@ -3,9 +3,11 @@ import { FormattedMessage } from "react-intl";
 import { Link, NavLink } from "react-router-dom";
 import './Header.jsx.css';
 import { ApiContext } from "../apiContext";
+import { LanguageContext } from "../languageContext";
 
 function Header() {
     const api = useContext(ApiContext);
+    const language = useContext(LanguageContext);
 
     const logout = () => {
         api.logout();
@@ -43,6 +45,13 @@ function Header() {
                             <FormattedMessage id="button.login" />
                         </Link>
                     )}
+
+                    <select value={language.language}
+                            onChange={(e) => language.setLanguage(e.target.value)}>
+                        {language.getLanguages().map(lang => (
+                            <option key={lang}>{lang}</option>
+                        ))}
+                    </select>
                 </div>
             </div>
         </header>

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import { IntlProvider } from 'react-intl';
+import { LanguageContextProvider } from './languageContext.jsx';
 import { ApiContextProvider } from './apiContext.jsx';
 
 import Header from "./components/Header";
@@ -21,10 +21,6 @@ import Participants from './pages/Participants.jsx';
 import ParticipantCreate from './pages/ParticipantCreate.jsx';
 import ParticipantDetails from './pages/ParticipantDetails.jsx';
 import ParticipantEdit from './pages/ParticipantEdit.jsx';
-
-import English from '../lang/en.json';
-import Polish from '../lang/pl.json';
-const locale = navigator.language;
 
 const Layout = () => (
     <>
@@ -128,10 +124,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
-        <IntlProvider locale={locale} messages={English}>
+        <LanguageContextProvider>
             <ApiContextProvider>
                 <RouterProvider router={router} />
             </ApiContextProvider>
-        </IntlProvider>
+        </LanguageContextProvider>
     </React.StrictMode>
 );
