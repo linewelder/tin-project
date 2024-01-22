@@ -31,6 +31,8 @@ export default function TournamentCreate() {
     const api = useContext(ApiContext);
     const navigate = useNavigate();
 
+    if (!api.currentUser) navigate("/");
+
     const isAdded = (participant) =>
         addedParticipants.findIndex(x => x.id == participant.id) >= 0;
 
