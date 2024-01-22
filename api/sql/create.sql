@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2024-01-18 19:59:49.454
+-- Last modification date: 2024-01-22 19:56:22.812
 
 -- tables
 -- Table: Category
@@ -52,19 +52,23 @@ CREATE TABLE User (
 -- foreign keys
 -- Reference: Tournament_User (table: Tournament)
 ALTER TABLE Tournament ADD CONSTRAINT Tournament_User FOREIGN KEY Tournament_User (Organizer)
-    REFERENCES User (IdUser);
+    REFERENCES User (IdUser)
+    ON DELETE CASCADE;
 
 -- Reference: Wynik_Uczestnik (table: TournamentParticipant)
 ALTER TABLE TournamentParticipant ADD CONSTRAINT Wynik_Uczestnik FOREIGN KEY Wynik_Uczestnik (IdParticipant)
-    REFERENCES Participant (IdParticipant);
+    REFERENCES Participant (IdParticipant)
+    ON DELETE CASCADE;
 
 -- Reference: Wynik_Zawody (table: TournamentParticipant)
 ALTER TABLE TournamentParticipant ADD CONSTRAINT Wynik_Zawody FOREIGN KEY Wynik_Zawody (IdTournament)
-    REFERENCES Tournament (IdTournament);
+    REFERENCES Tournament (IdTournament)
+    ON DELETE CASCADE;
 
 -- Reference: Zawody_Kategoria (table: Tournament)
 ALTER TABLE Tournament ADD CONSTRAINT Zawody_Kategoria FOREIGN KEY Zawody_Kategoria (IdCategory)
-    REFERENCES Category (IdCategory);
+    REFERENCES Category (IdCategory)
+    ON DELETE CASCADE;
 
 -- End of file.
 
