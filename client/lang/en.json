@@ -35,5 +35,6 @@
     "label.first-name": "First Name:",
     "label.last-name": "Last Name:",
     "label.password": "Password:",
-    "label.password-again": "Password Again:"
+    "label.password-again": "Password Again:",
+    "label.pagination": "Page {currentPage} out of {totalPages}"
 }
