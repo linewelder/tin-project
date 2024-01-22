@@ -31,11 +31,21 @@ export async function getCurrentTournaments(req, res) {
 
 export async function getTournamentHistory(req, res) {
     const id = req.params.id;
+    const first = +req.query.first || 0;
+    const count = +req.query.count || 8;
+
+    const totalCount = (await db.query(
+        "SELECT Count(1) AS TotalCount FROM Tournament " +
+        "WHERE IdCategory = ? AND IsClosed = 1",
+        [id]))[0].TotalCount;
 
     const rows = await db.query(
-        "SELECT * FROM Tournament WHERE IdCategory = ? AND IsClosed = 1", [id]);
-    const tournaments = rows.map(toTournament);
-    res.json(tournaments);
+        "SELECT * FROM Tournament " +
+        "WHERE IdCategory = ? AND IsClosed = 1 " +
+        "LIMIT ? OFFSET ?",
+        [id, count, first]);
+    const elements = rows.map(toTournament);
+    res.json({ totalCount, elements });
 };
 
 export async function getBestParticipants(req, res) {
