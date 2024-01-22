@@ -105,9 +105,9 @@ export default function CategoryDetails() {
                 <table>
                     <thead>
                         <tr>
-                            <th><FormattedMessage id="table.participants.full-name" /></th>
-                            <th><FormattedMessage id="table.participants.date" /></th>
-                            <th><FormattedMessage id="table.participants.result" /></th>
+                            <th><FormattedMessage id="table.participant.full-name" /></th>
+                            <th><FormattedMessage id="table.participant.date" /></th>
+                            <th><FormattedMessage id="table.participant.result" /></th>
                         </tr>
                     </thead>
                     <tbody>

@@ -63,10 +63,10 @@ export default function TournamentDetails() {
                 <table>
                     <thead>
                         <tr>
-                            <th><FormattedMessage id="table.participants.id" /></th>
-                            <th><FormattedMessage id="table.participants.first-name" /></th>
-                            <th><FormattedMessage id="table.participants.last-name" /></th>
-                            <th><FormattedMessage id="table.participants.result" /></th>
+                            <th><FormattedMessage id="table.participant.id" /></th>
+                            <th><FormattedMessage id="table.participant.first-name" /></th>
+                            <th><FormattedMessage id="table.participant.last-name" /></th>
+                            <th><FormattedMessage id="table.participant.result" /></th>
                         </tr>
                     </thead>
                     <tbody>
