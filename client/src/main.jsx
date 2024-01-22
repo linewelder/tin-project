@@ -14,6 +14,7 @@ import Tournaments from "./pages/Tournaments.jsx";
 
 import English from '../lang/en.json';
 import TournamentDetails from './pages/TournamentDetails.jsx';
+import Participants from './pages/Participants.jsx';
 const locale = navigator.language;
 
 const Layout = () => (
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
             {
                 path: "/categories/:id",
                 element: <CategoryDetails />,
+            },
+            {
+                path: "/participants",
+                element: <Participants />,
             },
             {
                 path: "/tournaments",
