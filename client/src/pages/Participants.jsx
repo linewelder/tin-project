@@ -1,7 +1,7 @@
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { usePagination } from "../apiContext.jsx";
+import { useContext, useEffect, useState } from "react";
+import { ApiContext, usePagination } from "../apiContext.jsx";
 import Pagination from "../components/Pagination.jsx";
 
 export default function Participants() {
@@ -10,12 +10,15 @@ export default function Participants() {
 
     const participants = usePagination("/participants", 3, setError);
 
+    const api = useContext(ApiContext);
+    const canEdit = api.currentUser?.admin || false;
+
     return (
         <>
             <h2><FormattedMessage id="page.participants.title" /></h2>
-            <Link to="create" className="button-link">
+            {canEdit && <Link to="create" className="button-link">
                 <FormattedMessage id="button.add-new" />
-            </Link>
+            </Link>}
 
             <Pagination pagination={participants} />
             <table>

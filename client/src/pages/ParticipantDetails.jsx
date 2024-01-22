@@ -1,13 +1,16 @@
 import { FormattedMessage } from "react-intl";
 import { Link, useParams } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
-import { useApiFetch } from "../apiContext.jsx";
+import { useContext, useEffect, useRef, useState } from "react";
+import { ApiContext, useApiFetch } from "../apiContext.jsx";
 
 export default function ParticipantDetails() {
     const { id } = useParams();
 
     const [error, setError] = useState(null);
     useEffect(() => { if (error) throw error; }, [error]);
+
+    const api = useContext(ApiContext);
+    const canEdit = api.currentUser?.admin || false;
 
     const path = `/participants/${id}`;
     const participant = useApiFetch(path, null, setError);
@@ -34,14 +37,14 @@ export default function ParticipantDetails() {
 
                 <div className="header-with-buttons">
                     <h2>{participant.firstName} {participant.lastName}</h2>
-                    <div>
+                    {canEdit && <div>
                         <Link to="edit" className="button-link">
                             <FormattedMessage id="button.edit" />
                         </Link>
                         <button onClick={() => deleteConfirm.current.showModal()}>
                             <FormattedMessage id="button.delete" />
                         </button>
-                    </div>
+                    </div>}
                 </div>
                 
                 <dl>
