@@ -113,7 +113,7 @@ export async function login(req, res) {
         email: rows[0].Email,
         firstName: rows[0].FirstName,
         lastName: rows[0].LastName,
-        admin: rows[0].IsAdmin
+        admin: rows[0].IsAdmin !== 0
     };
     user.token = createAuthToken(user);
     res.json(user);
