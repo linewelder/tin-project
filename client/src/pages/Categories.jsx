@@ -1,7 +1,7 @@
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useApiFetch } from "../apiContext.jsx";
+import { useContext, useEffect, useState } from "react";
+import { ApiContext, useApiFetch } from "../apiContext.jsx";
 
 export default function Categories() {
     const [ error, setError ] = useState(null);
@@ -9,13 +9,18 @@ export default function Categories() {
 
     const categories = useApiFetch("/categories", [], setError);
 
+    const api = useContext(ApiContext);
+    const canEdit = api.currentUser?.admin || false;
+
     return (
         <>
             <h2><FormattedMessage id="page.categories.title" /></h2>
 
-            <Link to="/categories/create" className="button-link">
-                <FormattedMessage id="button.add-new" />
-            </Link>
+            {canEdit &&
+                <Link to="/categories/create" className="button-link">
+                    <FormattedMessage id="button.add-new" />
+                </Link>
+            }
             <table>
                 <thead>
                     <tr>
