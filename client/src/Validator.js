@@ -9,13 +9,25 @@ export default class Validator {
         return this.errors;
     }
 
-    validate(name, func, messageId) {
+    validate(name, func, message) {
         if (!func(this.inputs[name])) {
-            this.errors.push(this.intl.formatMessage({ id: messageId }));
+            this.errors.push(message);
         }
     }
 
     notEmpty(name) {
-        this.validate(name, x => x.length > 0, `error.${name}.empty`);
+        this.validate(
+            name, x => x.length > 0,
+            this.intl.formatMessage({
+                id: `error.${name}.empty`
+            }));
+    }
+
+    maxLength(name, max) {
+        this.validate(
+            name, x => x.length <= max,
+            this.intl.formatMessage(
+                { id: `error.${name}.max-length` },
+                { max }));
     }
 }
