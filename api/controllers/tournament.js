@@ -1,8 +1,8 @@
 import db from "../db.js";
+import { getPaginationParams } from "../validation.js";
 
 export async function getAll(req, res) {
-    const first = +req.query.first || 0;
-    const count = +req.query.count || 8;
+    const [first, count] = getPaginationParams(req);
 
     const totalCount = (await db.query(
         "SELECT Count(1) AS TotalCount FROM Tournament"))[0].TotalCount;
@@ -26,6 +26,7 @@ export async function getAll(req, res) {
 
 export async function getOne(req, res) {
     const id = req.params.id;
+    if (id < 1) return res.status(404).json({ "error": "not-found" });
 
     const rows = await db.query(
         "SELECT IdTournament, Tournament.Name AS Name, Date," +
@@ -56,10 +57,10 @@ export async function getOne(req, res) {
 }
 
 export async function getParticipants(req, res) {
-    const id = +req.params.id;
+    const id = req.params.id;
+    if (id < 1) return res.status(404).json({ "error": "not-found" });
 
-    const first = +req.query.first || 0;
-    const count = +req.query.count || 8;
+    const [first, count] = getPaginationParams(req);
 
     const totalCount = (await db.query(
         "SELECT Count(1) AS TotalCount " +

@@ -1,5 +1,6 @@
 import db from "../db.js";
 import { toCategory, toTournament } from "../models.js";
+import { getPaginationParams } from "../validation.js";
 
 export async function getAll(req, res) {
     const rows = await db.query("SELECT * FROM Category");
@@ -9,6 +10,7 @@ export async function getAll(req, res) {
 
 export async function getOne(req, res) {
     const id = req.params.id;
+    if (id < 1) return res.status(404).json({ "error": "not-found" });
 
     const rows = await db.query("SELECT * FROM Category WHERE IdCategory = ?", [id]);
     if (rows.length == 0) {
@@ -22,6 +24,7 @@ export async function getOne(req, res) {
 
 export async function getCurrentTournaments(req, res) {
     const id = req.params.id;
+    if (id < 1) return res.status(404).json({ "error": "not-found" });
 
     const rows = await db.query(
         "SELECT * FROM Tournament WHERE IdCategory = ? AND IsClosed = 0", [id]);
@@ -31,8 +34,9 @@ export async function getCurrentTournaments(req, res) {
 
 export async function getTournamentHistory(req, res) {
     const id = req.params.id;
-    const first = +req.query.first || 0;
-    const count = +req.query.count || 8;
+    if (id < 1) return res.status(404).json({ "error": "not-found" });
+
+    const [first, count] = getPaginationParams(req);
 
     const totalCount = (await db.query(
         "SELECT Count(1) AS TotalCount FROM Tournament " +
@@ -50,6 +54,7 @@ export async function getTournamentHistory(req, res) {
 
 export async function getBestParticipants(req, res) {
     const id = req.params.id;
+    if (id < 1) return res.status(404).json({ "error": "not-found" });
 
     const rows = await db.query(
         "SELECT Participant.IdParticipant, FirstName, LastName, Date, Time " +
