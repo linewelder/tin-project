@@ -12,6 +12,7 @@ import Signup from "./pages/Signup";
 import Categories from "./pages/Categories";
 import CategoryCreate from './pages/CategoryCreate.jsx';
 import CategoryDetails from './pages/CategoryDetails.jsx';
+import CategoryEdit from './pages/CategoryEdit.jsx';
 import Tournaments from "./pages/Tournaments.jsx";
 import TournamentCreate from './pages/TournamentCreate.jsx';
 import TournamentDetails from './pages/TournamentDetails.jsx';
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
             {
                 path: "/categories/create",
                 element: <CategoryCreate />,
+            },
+            {
+                path: "/categories/:id/edit",
+                element: <CategoryEdit />,
             },
             {
                 path: "/participants",

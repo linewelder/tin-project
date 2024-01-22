@@ -56,6 +56,7 @@
     "page.categories.details.tournament-history": "Tournament History",
     "page.categories.details.best-participants": "Best Participants",
     "page.categories.create.title": "Add Category",
+    "page.categories.edit.title": "Edit {name}",
     "page.error.title": "An Error Occured!",
     "page.participants.title": "Participants",
     "page.participants.details.delete-confirm": "Are you sure you want to delete {firstName} {lastName}?",

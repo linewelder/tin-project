@@ -7,7 +7,8 @@ import {
     getBestParticipants,
     getCurrentTournaments,
     getOne,
-    getTournamentHistory
+    getTournamentHistory,
+    update
 } from "../controllers/category.js";
 import { authorize } from "../middleware.js";
 
@@ -20,5 +21,6 @@ router.get("/:id/tournament-history", asyncHandler(getTournamentHistory));
 router.get("/:id/best-participants", asyncHandler(getBestParticipants));
 router.post("/", authorize({ admin: true }), addNew);
 router.delete("/:id", authorize({ admin: true }), deleteOne);
+router.put("/:id", authorize({ admin: true }), update);
 
 export default router;

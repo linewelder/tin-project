@@ -113,3 +113,36 @@ export async function deleteOne(req, res) {
 
     res.status(204).end();
 };
+
+const updateCategorySchema = joi.object({
+    name: joi.string()
+        .max(20)
+        .required(),
+    description: joi.string()
+        .max(200)
+        .required(),
+});
+
+export async function update(req, res) {
+    const id = req.params.id;
+    if (id < 1) return res.status(404).json({ error: "not-found" });
+
+    const data = {
+        name: req.body.name,
+        description: req.body.description,
+    };
+    if (!tryValidate(res, data, updateCategorySchema)) {
+        return;
+    }
+
+    const rows = await db.query(
+        "UPDATE Category " +
+        "SET Name=?, Description=? " +
+        "WHERE IdCategory = ?",
+        [data.name, data.description, id]);
+    if (rows.rowCount === 0) {
+        res.status(404).json({ "error": "not-found" });
+        return;
+    }
+    res.json({});
+}
