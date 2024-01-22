@@ -36,6 +36,7 @@ export async function register(req, res) {
     newUser.id = result.insertId;
 
     res.json({
+        id: newUser.id,
         email: newUser.email,
         firstName: newUser.firstName,
         lastName: newUser.lastName,
@@ -61,6 +62,7 @@ export async function login(req, res) {
     }
 
     const user = {
+        id: rows[0].IdUser,
         email: rows[0].Email,
         firstName: rows[0].FirstName,
         lastName: rows[0].LastName,
